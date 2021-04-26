@@ -268,6 +268,7 @@ input.settings{
 }
 
 /*#####################################################################################*/
+
 /* The Modal (background) */
 .modal{
   display: none; /* Hidden by default */
@@ -278,21 +279,21 @@ input.settings{
   height: fit-content;
   width: 100%; /* Full width */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ 
 }
 /* Modal Content */
 .modal-content {
   margin: auto;
+  color: black;
   padding: 20px;
-  border: 1px solid #3c3cef;
+  border: 3px solid yellowgreen;
   width: 50%;
-  height: 70%;
-  background-color: rgba(255,255,255,0.6);
-  background-image: url("image/g.jpg");
+  height: 60%;
+  background-color: darkgrey;
+  background-image: url("image/welcome.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  color: white;
+
 }
 /* The CloseAbout (x) button  */
 .closeAbout {
