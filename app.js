@@ -45,6 +45,8 @@ var pacmanDown = false;
 var lives = 5;
 var pacmanRemain;
 var emptyCell;
+var columns =15;
+var lines = 15;
 
 /* defult user *//*todo: verify user name/password is 'k'*/
 $(document).ready(function () {
@@ -296,7 +298,7 @@ $(document).ready(function() {
 });
 
 const wallCells = [
-    "1,1", "1,2", "1,3", "1,4", "2,4", "2,3", "2,2", "2,1",
+    "1,1", "1,2", "1,3", "1,4", "5,1", "4,1", "3,1", "2,1",
     "1,6", "2,6", "3,6", "1,7", "1,8", "1,9", "1,10", "2,10", "3,10", "3,9", "3,8", "3,7",
     "3,12", "4,12", "5,12", "6,12", "7,12", "8,12", "9,12", "3,13", "4,13", "5,13", "6,13", "7,13", "8,13", "9,13",
     "5,1", "5,2", "5,3", "5,4", "6,1", "6,2", "6,3", "6,4",
@@ -304,7 +306,7 @@ const wallCells = [
     "8,0", "8,1", "9,0", "9,1",
     "8,3", "9,3", "10,3", "11,3", "12,3", "8,4", "9,4", "10,4", "11,4", "12,4", "11,1", "11,2", "12,1", "12,2",
     "11,6", "12,6", "13,6", "14,6",
-    "11,9", "11,10", "11,11", "11,12", "11,13", "11,14", "12,9", , "13,9", , "14,9",
+    "11,9", "11,10", "11,11", "11,13", "12,9", , "13,9", , "14,9",
 ];
 
 
@@ -321,22 +323,22 @@ function Start() {
 
 
     MonstersRHere = new Array();
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < lines; i++) {
         MonstersRHere[i] = new Array();
-        for (var j= 0 ; j<15 ; j++){
+        for (var j= 0 ; j<columns ; j++){
             MonstersRHere[i][j] =0;
         }
     }
 
     start_time = new Date();
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < lines; i++) {
         board[i] = new Array();
         //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-        for (var j = 0; j < 15; j++) {
+        for (var j = 0; j < columns; j++) {
             let cell= "" +i + "," +j;
             if (wallCells.includes(cell)) {
                 board[i][j] = 4;
-            }else if(monster_remain>0 && ((j===0 || j===14) && ( i===0 || i===14 ))){
+            }else if(monster_remain>0 && ((j===0 || j===lines-1) && ( i===0 || i===columns-1 ))){
                 monster_remain--;
                 if(monster_remain %2 === 0){
                     board[i][j] = 7;
@@ -406,12 +408,12 @@ function Start() {
 }
 
 function findRandomEmptyCell(board) {
-    var i = Math.floor(Math.random() * 15);
-    var j = Math.floor(Math.random() * 15);
+    var i = Math.floor(Math.random() * columns);
+    var j = Math.floor(Math.random() * lines);
 
     while (board[i][j] !== 0) {
-        i = Math.floor(Math.random() * 15);
-        j = Math.floor(Math.random() * 15);
+        i = Math.floor(Math.random() * columns);
+        j = Math.floor(Math.random() * lines);
     }
     return [i, j];
 }
@@ -432,8 +434,8 @@ function GetKeyPressed() {
 }
 
 function calculateCellSize(){
-    CellHeight = canvas.height/15;
-    CellWidth = canvas.width/15;
+    CellHeight = canvas.height/columns;
+    CellWidth = canvas.width/lines;
 }
 
 function Draw() {
@@ -452,8 +454,8 @@ function Draw() {
     var wallPic = new Image();
     wallPic.src = "image/pumpkinWall.jpg";
     color = getRandomColor();
-    for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 15; j++) {
+    for (var i = 0; i < lines; i++) {
+        for (var j = 0; j < columns; j++) {
             let bordVal = board[i][j];
             let MonsVal = MonstersRHere[i][j];
             console.log(MonsVal);
@@ -606,7 +608,7 @@ function UpdatePacmanPosition() {
     if (score >= 75 && time_elapsed <= 10) {
         pac_color = "green";
     }
-    if (score == 50) {
+    if (score == 200) {
         window.clearInterval(interval);
         window.alert("Game completed");
     } else {
@@ -616,56 +618,56 @@ function UpdatePacmanPosition() {
 
 function UpdateMonsterPosition(){
 
-    for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 15; j++) {
+    for (var i = 0; i < lines; i++) {
+        for (var j = 0; j < columns; j++) {
             let CellVal= MonstersRHere[i][j];
             if (CellVal === 7 || CellVal === 9 ) {
                 var randomNum = Math.floor(Math.random() * 2);/*0,1*/
                 var notMove = true;
 
                 //monster get down
-                if (randomNum === 0 && Math.abs(((i + 1) - shape.i) < Math.abs((i - 1) - shape.i)) && MonstersRHere[i + 1][j] !== 4 && MonstersRHere[i + 1][j] !== 7) {
+                if (randomNum === 0 && Math.abs(((i + 1) - shape.i) < Math.abs((i - 1) - shape.i)) && board[i + 1][j] !== 4 && MonstersRHere[i + 1][j] !== 7) {
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i + 1][j] = CellVal;
                     notMove = false;
                 }
                 //monster get up
-                else if (randomNum === 0 && Math.abs(((i + 1) - shape.i) > Math.abs((i - 1) - shape.i)) && MonstersRHere[i - 1][j] !== 4 && MonstersRHere[i - 1][j] !== 7) {
+                else if (randomNum === 0 && Math.abs(((i + 1) - shape.i) > Math.abs((i - 1) - shape.i)) && board[i - 1][j] !== 4 && MonstersRHere[i - 1][j] !== 7) {
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i - 1][j] = CellVal;
                     notMove = false;
                 }
                 //monster get right
-                else if (randomNum === 1 && Math.abs(((j + 1) - shape.j) < Math.abs((j - 1) - shape.j)) && MonstersRHere[i][j + 1] !== 4 && MonstersRHere[i][j + 1] !== 7) {
+                else if (randomNum === 1 && Math.abs(((j + 1) - shape.j) < Math.abs((j - 1) - shape.j)) && board[i][j + 1] !== 4 && MonstersRHere[i][j + 1] !== 7 && MonstersRHere[i][j + 1] !== 9) {
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i][j + 1] = CellVal;
                     notMove = false;
                 }
                 //monster get left
-                else if (randomNum === 1 && Math.abs(((j + 1) - shape.j) > Math.abs((j - 1) - shape.j)) && MonstersRHere[i][j - 1] !== 4 && MonstersRHere[i][j - 1] !==7) {
+                else if (randomNum === 1 && Math.abs(((j + 1) - shape.j) > Math.abs((j - 1) - shape.j)) && board[i][j - 1] !== 4 && MonstersRHere[i][j - 1] !==7 && MonstersRHere[i][j - 1] !== 9) {
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i][j - 1] = CellVal;
                     notMove = false;
                 } else if (notMove || shape.i == i || shape.j == j) {
                     while (notMove) {
                         var randomMoveIfStack = Math.floor(Math.random() * 4);/*0,1*/
-                        if (randomMoveIfStack === 0 && i-1 >= 0 && i-1 <= 14 && MonstersRHere[i - 1][j] !== 4 && MonstersRHere[i - 1][j] !== 7) {
+                        if (randomMoveIfStack === 0 && i-1 >= 0 && i-1 <= 14 && board[i - 1][j] !== 4 && MonstersRHere[i - 1][j] !== 7 && MonstersRHere[i-1][j] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i - 1][j] = CellVal;
                             notMove = false;
-                        } else if (randomMoveIfStack === 1  && i+1 >= 0 && i+1 <= 14 && MonstersRHere[i + 1][j] !== 4 && MonstersRHere[i + 1][j] !== 7) {
+                        } else if (randomMoveIfStack === 1  && i+1 >= 0 && i+1 <= 14 && board[i + 1][j] !== 4 && MonstersRHere[i + 1][j] !== 7 && MonstersRHere[i+1][j] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i + 1][j] = CellVal;
                             notMove = false;
                         }
                         //get right
-                        else if (randomMoveIfStack === 2  && (j+1 >= 0) && (j+1 <= 14) && MonstersRHere[i][j + 1] !== 4 && MonstersRHere[i][j + 1] !== 7) {
+                        else if (randomMoveIfStack === 2  && (j+1 >= 0) && (j+1 <= 14) && board[i][j + 1] !== 4 && MonstersRHere[i][j + 1] !== 7&& MonstersRHere[i+1][j] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i][j + 1] = CellVal;
                             notMove = false;
                         }
                         //get left
-                        else if (randomMoveIfStack === 3 && j >0 && board[i][j - 1] !== 4 && MonstersRHere[i][j - 1] !== 7) {
+                        else if (randomMoveIfStack === 3 && j >0 && board[i][j - 1] !== 4 && MonstersRHere[i][j - 1] !== 7 && MonstersRHere[i][j - 1] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i][j - 1] = CellVal;
                             notMove = false;
@@ -705,8 +707,8 @@ function MeetMonster(MonsVal){
     }
     else{
         pacmanRemain=1;
-        for (var i = 0; i < 15; i++) {
-            for (var j = 0; j < 15; j++) {
+        for (var i = 0; i < lines; i++) {
+            for (var j = 0; j < columns; j++) {
                 if(board[i][j] === 2){
                     board[i][j] = 0;
                 }
@@ -1098,9 +1100,10 @@ function stop_soundEffect() {
     noSound = true;
 }
 
+
 function gameOver() {
-    for (var i = 0; i < 15; i++) {
-        for(var j = 0; j < 15; j++){
+    for (var i = 0; i < lines; i++) {
+        for(var j = 0; j < columns; j++){
             if(board[i][j] === 1 || board[i][j] === 6 || board[i][j] === 7){
                 return false;
             }
