@@ -265,7 +265,7 @@ function displaySettings() {
 }
 
 
-/* ################# LOGIN ##########################*/
+/* ################# LOGIN Dev ##########################*/
 function showLogin() {
     document.getElementById("name").value = null;
     document.getElementById("userPassword").value = null;
