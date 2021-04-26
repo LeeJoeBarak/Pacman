@@ -11,7 +11,7 @@ var down = 40;
 var left = 37;
 var right = 39;
 var food_remain = -1;
-var num_of_monsters = -1;
+var monster_remain = -1;
 var timeToPlay = -1;
 var extra_food = 1;
 var pacmanRight = true;
@@ -242,11 +242,11 @@ function getRandomFoodAmount(){
 }
 
 function getRandomMonstersAmount(){
-    num_of_monsters = -1;
-    while (num_of_monsters < 1 || num_of_monsters > 4) {
-        num_of_monsters = parseInt(10 * Math.random());
+    monster_remain = -1;
+    while (monster_remain < 1 || monster_remain > 4) {
+        monster_remain = parseInt(10 * Math.random());
     }
-    return num_of_monsters;
+    return monster_remain;
 }
 
 function getRandomTimeAmount(){
@@ -262,6 +262,7 @@ function displaySettings() {
     setDefaultValuesForSettingsBoxes();
     $('#settings').css('display', 'block');
     $("#random_btn").css("display","block");
+    $('#game').css('display', 'block');
 }
 
 
@@ -295,7 +296,7 @@ $(document).ready(function() {
 });
 
 const wallCells = [
-    "1,1", "1,2", "1,3", "1,4", "2,4", "3,4", "3,3", "3,2", "3,1", "2,1",
+    "1,1", "1,2", "1,3", "1,4", "2,4", "2,3", "2,2", "2,1",
     "1,6", "2,6", "3,6", "1,7", "1,8", "1,9", "1,10", "2,10", "3,10", "3,9", "3,8", "3,7",
     "3,12", "4,12", "5,12", "6,12", "7,12", "8,12", "9,12", "3,13", "4,13", "5,13", "6,13", "7,13", "8,13", "9,13",
     "5,1", "5,2", "5,3", "5,4", "6,1", "6,2", "6,3", "6,4",
@@ -303,7 +304,6 @@ const wallCells = [
     "8,0", "8,1", "9,0", "9,1",
     "8,3", "9,3", "10,3", "11,3", "12,3", "8,4", "9,4", "10,4", "11,4", "12,4", "11,1", "11,2", "12,1", "12,2",
     "11,6", "12,6", "13,6", "14,6",
-    "17,0", "17,1", "18,0", "18,1",
     "11,9", "11,10", "11,11", "11,12", "11,13", "11,14", "12,9", , "13,9", , "14,9",
 ];
 
@@ -402,7 +402,7 @@ function Start() {
         false
     );
     interval = setInterval(UpdatePacmanPosition, 250);
-    interval = setInterval(UpdateMonsterPosition, 750);
+    interval = setInterval(UpdateMonsterPosition, 1000);
 }
 
 function findRandomEmptyCell(board) {
@@ -603,7 +603,7 @@ function UpdatePacmanPosition() {
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
-    if (score >= 20 && time_elapsed <= 10) {
+    if (score >= 75 && time_elapsed <= 10) {
         pac_color = "green";
     }
     if (score == 50) {
@@ -686,7 +686,7 @@ function MeetMonster(MonsVal){
     lives--;
     board[shape.i][shape.j] = 0;
     score = score - 10;
-    num_of_monsters = parseInt($(document.getElementById("monsters")).val());
+    monster_remain = parseInt($(document.getElementById("monsters")).val());
 
     pacmanRemain=0;
     //setTimeout(continueGameLifeDown, 500);
@@ -694,13 +694,14 @@ function MeetMonster(MonsVal){
         score= score-10;
     }
     else if (MonsVal ===7) { //7
-        score= score-20;
+        score = score- 20;
     }
 
 
     if(lives==0){
         window.clearInterval(interval);
         window.alert("Game completed");
+        displaySettings();
     }
     else{
         pacmanRemain=1;
@@ -710,9 +711,16 @@ function MeetMonster(MonsVal){
                     board[i][j] = 0;
                 }
                 MonstersRHere[i][j] = 0;
-                if(num_of_monsters > 0 && ((i === 0 || i === 14) && (j === 0 && j === 14))){
-                    MonstersRHere[i][j] = 9;
-                    num_of_monsters--;
+                if(monster_remain > 0 && ((i === 0 || i === 14) && (j === 0 || j === 14))){
+                    if(monster_remain %2 === 0){
+                        board[i][j] = 7;
+                        MonstersRHere[i][j] = 7;
+                    }
+                    else{
+                        board[i][j] = 9;
+                        MonstersRHere[i][j] = 9;
+                    }
+                    monster_remain--;
                 }
             }
         }
@@ -726,7 +734,7 @@ function MeetMonster(MonsVal){
         clearIntervals();
 
         intervals.push(setInterval(UpdatePacmanPosition, 150));
-        intervals.push(setInterval(UpdateMonsterPosition, 500));
+        intervals.push(setInterval(UpdateMonsterPosition, 750));
     }
 
 }
@@ -982,7 +990,7 @@ function initGame() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context = canvas.getContext("2d");
     food_remain = parseInt($(document.getElementById("food")).val());
-    num_of_monsters = parseInt($(document.getElementById("monsters")).val());
+    monster_remain = parseInt($(document.getElementById("monsters")).val());
     timeToPlay = parseInt($(document.getElementById("setTime")).val());
     pacmanRight = true;
     pacmanLeft = false;
@@ -1056,7 +1064,7 @@ function continueGameLifeDown() {
     $("#timeAlert").css("display", "none");
     removeLifeIcon(lives);
     lives--;
-    num_of_monsters = parseInt($(document.getElementById("monsters")).val());
+    monster_remain = parseInt($(document.getElementById("monsters")).val());
     lives = false;
     pacman_remain = 1;
     for (var i = 0; i < 15; i++) {
@@ -1065,9 +1073,9 @@ function continueGameLifeDown() {
                 board[i][j] = 0;
             }
             MonstersRHere[i][j] = 0;
-            if(num_of_monsters > 0 && ((i === 0 && j === 0) || (i === 14 && j === 0) || (i === 14 && j === 14) || (i === 0 && j === 14))){
+            if(monster_remain > 0 && ((i === 0 && j === 0) || (i === 14 && j === 0) || (i === 14 && j === 14) || (i === 0 && j === 14))){
                 MonstersRHere[i][j] = 9;
-                num_of_monsters--;
+                monster_remain--;
             }
         }
     }
