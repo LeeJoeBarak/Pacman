@@ -28,7 +28,7 @@ var playerName;
 var extra_life = 1;
 var clock = 1;
 var gameSong;
-var noSound = false;
+var StopSoungEffects = false;
 var intervalExtraScore;
 var n;
 var k;
@@ -278,10 +278,10 @@ function showLogin() {
     $('#score_time_life').css('display', 'none');
     $("#footer").css("position","fixed");
     clearIntervals();
-    if(!noSound) {
+    if(!StopSoungEffects) {
         stopSong();
         stop_soundEffect();
-        noSound = false;
+        StopSoungEffects = false;
     }
 }
 
@@ -592,7 +592,7 @@ function UpdatePacmanPosition() {
             score = score+25;
             document.getElementById("alertString").innerHTML = "You Got 25 points!!";
         }
-        if(!noSound){
+        if(!StopSoungEffects){
             var FruitAudio = new Audio('audio/pacman_eatfruit.wav');
             FruitAudio.play();
         }
@@ -604,9 +604,9 @@ function UpdatePacmanPosition() {
     if (MonsPacVal===9){
         MeetMonster(9);
     }
-    if(!noSound && (MonsPacVal===7 || MonsPacVal === 9)){
-        var audio = new Audio('audio/pacman_eatghost.wav');
-        audio.play();
+    if(!StopSoungEffects && (MonsPacVal===7 || MonsPacVal === 9)){
+        var audioGhost = new Audio('audio/pacman_eatghost.wav');
+        audioGhost.play();
     }
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
@@ -617,6 +617,8 @@ function UpdatePacmanPosition() {
     if (score == 200) {
         window.clearInterval(interval);
         window.alert("Game completed");
+        var audioDeath = new Audio('audio/pacman_death.wav');
+        audioDeath.play();
     } else {
         Draw();
     }
@@ -686,7 +688,7 @@ function UpdateMonsterPosition(){
     let CellVal= MonstersRHere[shape.i][shape.j];
     if(CellVal === 7 || CellVal===9){
         MeetMonster(CellVal);
-        if(!noSound){
+        if(!StopSoungEffects){
             var audio = new Audio('audio/pacman_eatghost.wav');
             audio.play();
         }
@@ -785,7 +787,7 @@ $(document).ready(function () {
         $("#footer").css("position","fixed")
         stopSong();
         stop_soundEffect()
-        noSound = false;
+        StopSoungEffects = false;
     });
 });
 
@@ -1107,7 +1109,7 @@ function continueGameLifeDown() {
 }
 
 function stop_soundEffect() {
-    noSound = true;
+    StopSoungEffects = true;
 }
 
 
