@@ -611,7 +611,7 @@ function UpdatePacmanPosition() {
     if (MonsPacVal===9){
         MeetMonster(9);
     }
-    if(!StopSoungEffects && (MonsPacVal===7 || MonsPacVal === 9)){
+    if(lives>1 && !StopSoungEffects && (MonsPacVal===7 || MonsPacVal === 9)){
         var audioGhost = new Audio('audio/pacman_eatghost.wav');
         audioGhost.play();
     }
@@ -624,9 +624,9 @@ function UpdatePacmanPosition() {
     if (score == 200  && !GameCompleted) {
         window.clearInterval(interval);
         window.alert("Game completed");
-        var audioDeath = new Audio('audio/pacman_death.wav');
+        /*var audioDeath = new Audio('audio/pacman_death.wav');
+        audioDeath.play();*/
         CreepyMusic.pause();
-        audioDeath.play();
         displaySettings();
         GameCompleted= true;
     } else {
@@ -698,7 +698,7 @@ function UpdateMonsterPosition(){
     let CellVal= MonstersRHere[shape.i][shape.j];
     if(CellVal === 7 || CellVal===9){
         MeetMonster(CellVal);
-        if(!StopSoungEffects){
+        if(lives >1 && !StopSoungEffects){
             var audio = new Audio('audio/pacman_eatghost.wav');
             audio.play();
         }
