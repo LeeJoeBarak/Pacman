@@ -578,7 +578,8 @@ function UpdatePacmanPosition() {
         }
     }
     x=-1;
-    if(board[shape.i][shape.j]){
+    let BoardVal = board[shape.i][shape.j];
+    if(BoardVal === 5 || BoardVal===6 || BoardVal===7){
         if(board[shape.i][shape.j] ==5 ){
             score = score+5;
             document.getElementById("alertString").innerHTML = "You Got 5 points!!";
@@ -591,18 +592,26 @@ function UpdatePacmanPosition() {
             score = score+25;
             document.getElementById("alertString").innerHTML = "You Got 25 points!!";
         }
-
-        if (MonstersRHere[shape.i][shape.j]==7){
-            MeetMonster(7);
+        if(!noSound){
+            var FruitAudio = new Audio('audio/pacman_eatfruit.wav');
+            FruitAudio.play();
         }
-        if (MonstersRHere[shape.i][shape.j]==9){
-            MeetMonster(9);
-        }
+    }
+    let MonsPacVal = MonstersRHere[shape.i][shape.j];
+    if (MonsPacVal===7){
+        MeetMonster(7);
+    }
+    if (MonsPacVal===9){
+        MeetMonster(9);
+    }
+    if(!noSound && (MonsPacVal===7 || MonsPacVal === 9)){
+        var audio = new Audio('audio/pacman_eatghost.wav');
+        audio.play();
     }
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
-    if (score >= 75 && time_elapsed <= 10) {
+    if (score >= 75 && time_elapsed <= 10 && pac_color!= "green") {
         pac_color = "green";
     }
     if (score == 200) {
@@ -677,6 +686,10 @@ function UpdateMonsterPosition(){
     let CellVal= MonstersRHere[shape.i][shape.j];
     if(CellVal === 7 || CellVal===9){
         MeetMonster(CellVal);
+        if(!noSound){
+            var audio = new Audio('audio/pacman_eatghost.wav');
+            audio.play();
+        }
     }
 }
 
