@@ -25,11 +25,6 @@
     </div>
 </section>
 
-<!-- #footer BOTTOM -->
-<footer id="bottomFooter" class="bottomFooter">
-    <p><Strong>developed by: Barak Yacouel <span>barakya@post.bgu.ac.il</span> & Lee Joe Barak <span>leejoe@post.bgu.ac.il</span> </Strong></p>
-</footer>
-
 
 <!-- The "About" Modal -->
 <div id="myModal" class="modal">
@@ -52,11 +47,6 @@
             <li> Handling the drawing of the game area and update the page properly </li>
         </ul>
     </div>
-</div>
-
-<!-- #loading_img -->
-<div id="loading_img" hidden>
-    <img src="image/ezgif.com-gif-maker.gif" alt="loading..." class="center">
 </div>
 
 <!--Menu Navigation Bar -->
@@ -185,6 +175,7 @@
 <!-- #score_time_life -->
 <div id="score_time_life" class="theGame" style="display: none">
     <div id="frame"><!--todo: check if possiblr to unify with containing div-->
+        <!-- ALL LEFT SIDE PANEL OF THE GAME-->
         <div id="left_side" style="margin-left: auto">
             <div id="player_name">
                 <h1>PLAYER NAME: <p id="pl_name" style="display: inline-flex"></p></h1>
@@ -230,9 +221,11 @@
                 </audio>
             </div>
         </div>
+        <!-- ALL MIDDLE PANEL - WHERE THE ACTUAL GAME IS -->
         <div id="game">
             <canvas id="canvas" class="gameClass" height="600" width="600"></canvas>
         </div>
+        <!-- ALL RIGHT SIDE PANEL - WHERE WE SHOW THE MOVE-KEYS AND SETTINGS -->
         <div id="right_side" class="tableSetting">
             <table>
                 <tbody>
@@ -282,6 +275,16 @@
         </div>
     </div>
 </div>
+
+<!-- #loading_img -->
+<div id="loading_img" hidden>
+    <img src="image/ezgif.com-gif-maker.gif" alt="loading..." class="center">
+</div>
+
+<!-- #footer BOTTOM -->
+<footer id="bottomFooter" class="bottomFooter">
+    <p><Strong>developed by: Barak Yacouel <span>barakya@post.bgu.ac.il</span> & Lee Joe Barak <span>leejoe@post.bgu.ac.il</span> </Strong></p>
+</footer>
 
 </body>
 
