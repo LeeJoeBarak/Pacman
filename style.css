@@ -279,15 +279,19 @@ input.settings{
   z-index: 2000; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   padding-left: 500px;
-  padding-right: 300px;
+  /*padding-right: 300px;*/
   padding-bottom: 300px;
   text-align: left;
   overflow: auto; /* Enable scroll if needed */
+  width: auto;
+ height: auto;
 }
 /* Modal Content */
 .modal-content {
   margin: auto;
   color: white;
+  font-family: halloween, sans-serif;
+  font-size: small;
   padding: 20px;
   border: 3px solid yellowgreen;
   width: 100%;
@@ -297,11 +301,16 @@ input.settings{
   background-repeat: no-repeat;
   background-image: url("image/Best-Halloween-Projectors.gif");
 }
+a.modalLinks{
+  font-size: medium;
+  font-family: halloween, sans-serif;
+}
 /* The CloseAbout (x) button  */
 .closeAbout {
-  color: #aaaaaa;
+  display: inline-block;
+  color: whitesmoke;
   float: right;
-  font-size: 28px;
+  font-size: 80px;
   font-weight: bold;
 }
 .closeAbout:hover,
@@ -313,15 +322,15 @@ input.settings{
 
 
 h3{
-  font-family: "JFWilwod", sans-serif;
-  font-size: large;
-  color: black;
+  font-family: "halloween", sans-serif;
+  font-size: small;
+  color: yellowgreen;
 }
 h4{
   text-align: left;
-  font-size: 65%;
-  font-family: "HalloWitchZ", sans-serif;
-  color: black;
+  font-size: 50%;
+  font-family: "halloween", sans-serif;
+  color: white;
   float: left;
 }
 .clearFix{
