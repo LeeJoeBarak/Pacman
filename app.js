@@ -47,6 +47,7 @@ var pacmanRemain;
 var emptyCell;
 var columns =15;
 var lines = 15;
+var CreepyMusic = new Audio('audio/creepy.mp3');
 
 /* defult user */
 $(document).ready(function () {
@@ -262,6 +263,7 @@ function displaySettings() {
     $('#settings').css('display', 'block');
     $("#random_btn").css("display","block");
     $('#game').css('display', 'block');
+    $('#score_time_life').css('display', 'none');
 }
 
 
@@ -400,8 +402,9 @@ function Start() {
         },
         false
     );
-    interval = setInterval(UpdatePacmanPosition, 250);
+    interval = setInterval(UpdatePacmanPosition, 350);
     interval = setInterval(UpdateMonsterPosition, 1000);
+    CreepyMusic.play();
 }
 
 function findRandomEmptyCell(board) {
@@ -726,7 +729,7 @@ function MeetMonster(MonsVal){
                 }
                 MonstersRHere[i][j] = 0;
                 if(monster_remain > 0 && ((i === 0 || i === 14) && (j === 0 || j === 14))){
-                    if(monster_remain %2 === 0){
+                    if(monster_remain % 2 === 0){
                         board[i][j] = 7;
                         MonstersRHere[i][j] = 7;
                     }
