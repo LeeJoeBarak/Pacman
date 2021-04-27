@@ -466,6 +466,7 @@ function Start() {
     interval = setInterval(UpdatePacmanPosition, 350);
     interval = setInterval(UpdateMonsterPosition, 1000);
     CreepyMusic.play();
+    GameCompleted = false;
 }
 
 function findRandomEmptyCell(board) {
@@ -1131,39 +1132,6 @@ function alertNote(note,timeToAlert) {
     }, timeToAlert);
 }
 
-function continueGameLifeDown() {
-    $("#timeAlert").css("display", "none");
-    removeLifeIcon(lives);
-    lives--;
-    monster_remain = parseInt($(document.getElementById("monsters")).val());
-    lives = false;
-    pacman_remain = 1;
-    for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 15; j++) {
-            if(board[i][j] === 2){
-                board[i][j] = 0;
-            }
-            MonstersRHere[i][j] = 0;
-            if(monster_remain > 0 && ((i === 0 && j === 0) || (i === 14 && j === 0) || (i === 14 && j === 14) || (i === 0 && j === 14))){
-                MonstersRHere[i][j] = 9;
-                monster_remain--;
-            }
-        }
-    }
-    if(pacman_remain > 0 ){
-        var emptyCell = findRandomEmptyCell(board);
-        board[emptyCell[0]][emptyCell[1]] = 5;
-        shape.i = emptyCell[0];
-        shape.j = emptyCell[1];
-        pacman_remain--;
-    }
-
-    clearIntervals();
-
-    intervals.push(setInterval(UpdatePacmanPosition, 150));
-    intervals.push(setInterval(UpdateMonsterPosition, 500));
-    intervals.push(setInterval(UpdateExtraScorePosition, 500));
-}
 
 function stop_soundEffect() {
     StopSoungEffects = true;
