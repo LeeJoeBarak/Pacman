@@ -88,11 +88,11 @@ div.logo{
 }
 
  /*Navigation Bar*/
-.navbar {
+.navbar {/*todo: fix transition from register form to settings form -> menu goes to bottom of page*/
   position: relative;
-  min-height: 30px;
+  padding-top: 2%;
   margin-bottom: 40px;
-  margin-top: 3%;
+  margin-top: 0;
   padding-right: 2%;
   padding-left: 1%;
   border: 1px solid transparent;
@@ -100,6 +100,7 @@ div.logo{
 }
 .navbar ul{
   display:inline-block;
+  top: 0;
   margin:0;
   padding:0;
   list-style:none;
@@ -108,6 +109,7 @@ div.logo{
   z-index: 1030;  /*@zindex-navbar-fixed:  1030; */
 }
 .ulNav ul {
+  top: 0 ;
   position:  relative;
   list-style-type: none;
   min-height: 35px;
@@ -243,6 +245,7 @@ input.register{
 /*Loading GIF */
 .center {
   display: block;
+  margin-top: 5%;
   margin-left: auto;
   margin-right: auto;
   width: 30%;
@@ -278,6 +281,7 @@ input.settings{
   text-align: left;
   height: fit-content;
   width: 100%; /* Full width */
+  height: 100%;
   overflow: auto; /* Enable scroll if needed */
  
 }
@@ -288,12 +292,12 @@ input.settings{
   padding: 20px;
   border: 3px solid yellowgreen;
   width: 50%;
-  height: 60%;
+  height: 100%;
   background-color: darkgrey;
+  background-color: rgba(255,255,255,0.6);
   background-image: url("image/welcome.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-
 }
 /* The CloseAbout (x) button  */
 .closeAbout {

@@ -48,7 +48,7 @@ var emptyCell;
 var columns =15;
 var lines = 15;
 
-/* defult user *//*todo: verify user name/password is 'k'*/
+/* defult user */
 $(document).ready(function () {
     let defUserName = {
         userName: "k",
@@ -82,10 +82,6 @@ $(function() {
             },
         },
         messages: { // Specify validation error messages
-            // upId: "Please insert only one keyboard",
-            // leftId: "Please insert only one keyboard",
-            // upId: "Please insert only one keyboard",
-            // rightId: "Please insert only one keyboard",
             food: {
                 required: "you forgot to fill in the amount of food",
                 min: "you forgot to choose a number between 50 and 90",
@@ -127,6 +123,7 @@ $(function() {
 function submitSettingsHandler(){//Show score_time_life
     $("#settings").css("display", "none");
     $("#random_btn").css("display", "none");
+    $("#menu").css("position", "fixed");
     $('#score_time_life').css('display', 'block');
     displaySettingDuringTheGame();
 }
@@ -143,7 +140,7 @@ function initializeGameDesign() {
 function displaySettingDuringTheGame() {
     // initSetting();
     document.getElementById('pl_name').innerHTML = playerName;
-    if($('#upId').val()){
+    if($('#upId').val()){/*Input element in Settings Form with id="upId"*/
         document.getElementById('up').innerHTML = document.getElementById("upId").value;
     }
     else {
