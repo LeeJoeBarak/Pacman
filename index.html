@@ -56,7 +56,7 @@
                 <li><a id="welcomeBtn" href="#welcome">Welcome</a></li>
                 <li><a id="registerBtn" href="#register">Register</a></li>
                 <li><a id="loginBtn" href="#login">Login</a></li>
-                <li><a id="myBtn" onclick="aboutModalHandler()" type="button" >About</a></li>
+                <li><a id="myBtn" onclick="aboutModalHandler()" type="button" style="cursor: pointer;" >About</a></li>
             </ul>
     </nav>
 </section>
@@ -130,8 +130,17 @@
 
         <label for="birthday" class="registerFields">Birthdate :</label>
         <input type="date" id="birthday" class="register" name="birthday"><br>
+        <table>
+            <tr>
+                <td>
+                    <button type="submit">REGISTER</button>
+                </td>
+                <td>
+                    <button type="reset">RESET</button>
+                </td>
+            </tr>
+        </table>
 
-        <button type="submit">REGISTER</button>
     </form>
 </div>
 

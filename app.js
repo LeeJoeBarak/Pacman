@@ -63,6 +63,67 @@ $(document).ready(function () {
     localStorage.setItem("k", str);
 });
 
+
+
+/*###################################################################################*/
+
+/*
+ #aboutBtn.Click -->
+ HIDE: #register, #login, #welcome, #setting, #random_btn, #score_time_life */
+/*$(document).ready(function () {
+    $("#aboutBtn").click(function () {
+        $('#welcome').css("display", "none");
+        $(document.getElementById("register")).hide();
+        $(document.getElementById("login")).hide();
+        $(document.getElementById("settings")).hide();
+        $("#random_btn").css("display", "none");
+        $('#score_time_life').css('display', 'none');
+        $("#footer").css("position","fixed")
+        stopSong();
+        stop_soundEffect()
+        StopSoungEffects = false;
+    });
+});*/
+
+$(document).ready(function () {
+    $("#welcomeBtn").click(function () {
+        clearIntervals();
+        $(document.getElementById("about")).hide();
+        $(document.getElementById("register")).hide();
+        $(document.getElementById("login")).hide();
+        $('#welcome').css("display", "block");
+        $(document.getElementById("settings")).hide();
+        $("#random_btn").css("display", "none");
+        $('#score_time_life').css('display', 'none');
+        $("#footer").css("position","fixed");
+        stopSong();
+    });
+});
+
+$(document).ready(function () {
+    $("#loginBtn").click(function () {
+        showLogin();
+    });
+});
+
+$(document).ready(function () {
+    $("#registerBtn").click(function () {
+        clearIntervals();
+        $('#welcome').css("display", "none");
+        $(document.getElementById("about")).hide();
+        $(document.getElementById("login")).hide();
+        $("#register").show(300);
+        $(document.getElementById("settings")).hide();
+        $("#random_btn").css("display", "none");
+        $('#score_time_life').css('display', 'none');
+        $("#footer").css("position","fixed");
+        stopSong();
+    });
+});
+
+
+
+
 /* form[name=settings Handler *//*todo: Validates the selected form  */
 $(function() {
     $("form[name='settings']").validate({
@@ -780,66 +841,6 @@ function removeLifeIcon(i) {
 }
 
 
-/*###################################################################################*/
-
-/*
- #aboutBtn.Click -->
- HIDE: #register, #login, #welcome, #setting, #random_btn, #score_time_life */
-$(document).ready(function () {
-    $("#aboutBtn").click(function () {
-        $('#welcome').css("display", "none");
-        $(document.getElementById("register")).hide();
-        $(document.getElementById("login")).hide();
-        $(document.getElementById("settings")).hide();
-
-        $("#about").show(300);
-
-        $("#random_btn").css("display", "none");
-        $('#score_time_life').css('display', 'none');
-        $("#footer").css("position","fixed")
-        stopSong();
-        stop_soundEffect()
-        StopSoungEffects = false;
-    });
-});
-
-$(document).ready(function () {
-    $("#welcomeBtn").click(function () {
-        clearIntervals();
-        $(document.getElementById("about")).hide();
-        $(document.getElementById("register")).hide();
-        $(document.getElementById("login")).hide();
-        $('#welcome').css("display", "block");
-        $(document.getElementById("settings")).hide();
-        $("#random_btn").css("display", "none");
-        $('#score_time_life').css('display', 'none');
-        $("#footer").css("position","fixed");
-        stopSong();
-    });
-});
-
-$(document).ready(function () {
-    $("#loginBtn").click(function () {
-        showLogin();
-    });
-});
-
-$(document).ready(function () {
-    $("#registerBtn").click(function () {
-        clearIntervals();
-        $('#welcome').css("display", "none");
-        $(document.getElementById("about")).hide();
-        $(document.getElementById("login")).hide();
-        $("#register").show(300);
-        $(document.getElementById("settings")).hide();
-        $("#random_btn").css("display", "none");
-        $('#score_time_life').css('display', 'none');
-        $("#footer").css("position","fixed");
-        stopSong();
-    });
-});
-
-
 /* form[name=Registration Handler */
 $(function() {
     $.validator.addMethod("lettersonly", function(value, element) {
@@ -964,6 +965,7 @@ function validateUserPassword() {
 function aboutModalHandler() {
     var modal = document.getElementById("myModal");
     modal.style.display = "block";  // display "about" modal
+    var btn = $("#myBtn");
     /*close modal by:
     * 1. clicking the "x" button
     * 2. clicking anywhere outside the modal
@@ -982,7 +984,46 @@ function aboutModalHandler() {
         if (x === 27) {
             modal.style.display = "none";
         }
-    };
+    }
+    /*// When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+    // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+    // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+   */
+}
+
+function closeAbout_Clicked_X(event){
+    var span = document.getElementById("closeAbout") // clicking the "x" button -> close modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+}
+function closeAbout_ClickedAnywhere(event){
+    window.onclick = function (event) { //clicks anywhere -> close modal
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+function closeAbout_ClickedEsc(event){
+    document.onkeydown = function (event) { // clicking the Esc button -> close modal
+        var x = event.keyCode;
+        if (x === 27) {
+            modal.style.display = "none";
+        }
+    }
 }
 
 function showRegistration() {
