@@ -14,10 +14,6 @@ var food_remain = -1;
 var monster_remain = -1;
 var timeToPlay = -1;
 var extra_food = 1;
-var pacmanRight = true;
-var pacmanLeft = false;
-var pacmanUp = false;
-var pacmanDown = false;
 var num_of_25_pt;
 var scoreOfTotalBoard = 0;
 var MonstersRHere;
@@ -620,28 +616,36 @@ function UpdatePacmanPosition() {
     if (x == 1) {
         if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
             shape.j--;
-            pacmanDown, pacmanLeft, pacmanRight = false, false, false;
+            pacmanDown =false;
+            pacmanLeft = false;
+            pacmanRight = false;
             pacmanUp =true;
         }
     }
     if (x == 2) {
         if (shape.j < 14 && board[shape.i][shape.j + 1] != 4) {
             shape.j++;
-            pacmanUp, pacmanLeft, pacmanRight = false, false, false;
+            pacmanUp = false;
+            pacmanLeft = false;
+            pacmanRight = false;
             pacmanDown =true;
         }
     }
     if (x == 3) {
         if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
             shape.i--;
-            pacmanDown, pacmanUp, pacmanRight = false, false, false;
+            pacmanDown = false;
+            pacmanUp= false;
+            pacmanRight = false;
             pacmanLeft =true;
         }
     }
     if (x == 4) {
         if (shape.i < 14 && board[shape.i + 1][shape.j] != 4) {
             shape.i++;
-            pacmanDown, pacmanUp, pacmanLeft = false, false, false;
+            pacmanDown = false;
+            pacmanUp = false;
+            pacmanLeft = false;
             pacmanRight = true;
         }
     }
