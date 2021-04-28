@@ -476,7 +476,6 @@ function validateUserPassword() {
     }
     else if(originalData === null){
         alert("no such user, you must register first");
-
     }
     else {
         let dataObj = JSON.parse(originalData);
@@ -493,6 +492,7 @@ function validateUserPassword() {
         }
     }
 }
+
 function aboutModalHandler() {
     var modal = document.getElementById("myModal");
     modal.style.display = "block";  // display "about" modal
