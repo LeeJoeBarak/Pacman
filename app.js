@@ -124,7 +124,7 @@ function hideForLoginButtonClicked(){
     $(document.getElementById("register")).hide();
     $(document.getElementById("settings")).hide();
 }
-
+/*DONE*/
 $(document).ready(function () {
     $("#registerBtn").click(function () {
        showRegister();
@@ -145,7 +145,7 @@ function hideForRegisterButtonClicked(){
     $(document.getElementById("settings")).hide();
     $('#score_time_life').css('display', 'none');
 }
-/* form[name=settings Handler *//*todo: Validates the selected form  */
+/* form[name=settings Handler */
 $(function() {
     $("form[name='settings']").validate({
         rules: { // Specify validation rules
@@ -362,11 +362,11 @@ function displaySettings() {
 $(function() {
     $.validator.addMethod("lettersonly", function(value, element) {
         return this.optional(element) || /^[a-z]+$/i.test(value);
-    }, "Letters only please");
+    }, "only letters allowed");
 
     $.validator.addMethod("alphanumeric", function(value, element) {
         return this.optional(element) || /^.*(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/i.test(value);
-    }, "Please use with letters and numbers");
+    }, "your password must include both letters and numbers");
 
     // Initialize form validation on the registration form.
     // It has the name attribute "registration"
@@ -395,33 +395,43 @@ $(function() {
         },
         // Specify validation error messages
         messages: {
-            user_name: "Username is required",
+            user_name: "you must enter Username",
             user_password: {
-                required: "Password is required",
-                minlength: "Password length should be 6",
-                maxlength: "Password length should be 6"
+                required: "you must enter Password",
+                minlength: "Password length must be at least 6 characters and numbers"
             },
             userFirstName: {
-                required: "First name is required",
-                lettersonly: "First name should contains only letters"
+                required: "you must enter first name",
+                lettersonly: "First name must contains only letters"
             },
             userLastName: {
-                required: "Last name is required",
-                lettersonly: "Last name should contains only letters"
+                required: "you must enter last name",
+                lettersonly: "Last name must contains only letters"
             },
             userMail: {
-                required: "Email is required",
-                email: "Please enter a valid email address"
+                required: "you must enter valid email address",
+                email: "not valid email address"
             },
-            birthday: "Birthday is required",
+            birthday: "you must enter your date of birth",
         },
         submitHandler: function(form) {
-            // alert("Hi");
             insertUserToDB();
-            // form.submit();
         },
         invalidHandler: function(event, validator) {
-            alert("Please check your registration values!")
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                    ? 'Please correct the following error:\n'
+                    : 'Please correct the following ' + errors + ' errors.\n';
+                var errors = "";
+                if (validator.errorList.length > 0) {
+                    for (x=0;x<validator.errorList.length;x++) {
+                        errors += "\n\u25CF " + validator.errorList[x].message;
+                    }
+                }
+                alert(message + errors);
+            }
+            validator.focusInvalid();
         }
     });
 });
@@ -432,6 +442,8 @@ function insertUserToDB() {
     var lastName = document.getElementById("userLastName").value;
     var userMail = document.getElementById("userMail").value;
     var date = document.getElementById("birthday").value;
+
+
     if (localStorage.getItem(user_name) === null) {
         let data = {
             userName: user_name,
@@ -441,18 +453,18 @@ function insertUserToDB() {
             mail: userMail,
             birthDay: date
         };
+        window.localStorage.setItem(user_name, JSON.stringify(data));
         document.forms[0].reset();
-        let str = JSON.stringify(data);
-        localStorage.setItem(user_name, str);
         $('#register').css('display', 'none');
         $("#loading_img").css("display","block");
         setTimeout(displaySettings,2000);
         playerName = userMail;
     }
     else {
-        alert("this user already exist");
+        alert("Seems like this Username is already taken...");
     }
 }
+
 function validateUserPassword() {
     let userName = document.getElementById("name").value;
     let userPassword = document.getElementById("userPassword").value;
