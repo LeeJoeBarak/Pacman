@@ -112,11 +112,12 @@ function showLogin() {
     $('#score_time_life').css('display', 'none');
     $("#footer").css("position","fixed");
     clearIntervals();
-    if(StopSoungEffects) {
+    /*if(StopSoungEffects) {
         stopSong();
         stop_soundEffect();
         StopSoungEffects = false;
-    }
+    }*/
+    CreepyMusic.pause();
 }
 function hideForLoginButtonClicked(){
     $(document.getElementById("welcome")).hide();
@@ -124,8 +125,6 @@ function hideForLoginButtonClicked(){
     $(document.getElementById("register")).hide();
     $(document.getElementById("settings")).hide();
 }
-
-
 
 $(document).ready(function () {
     $("#registerBtn").click(function () {
@@ -141,9 +140,6 @@ $(document).ready(function () {
         stopSong();
     });
 });
-
-
-
 
 /* form[name=settings Handler *//*todo: Validates the selected form  */
 $(function() {
