@@ -79,13 +79,16 @@ $.ajax({
 /*DONE*/
 $(document).ready(function () {
     $("#welcomeBtn").click(function () {
-        clearIntervals();
-        hideForWelcomeButtonClicked();
-        $('#welcome').css("display", "block");
-        $("#bottomFooter").css("position","fixed");
-        stopSong();/*todo: calling an empty function!*/
+       showWelcome();
+       CreepyMusic.pause();
     });
 });
+function showWelcome(){
+    clearIntervals();
+    hideForWelcomeButtonClicked();
+    $('#welcome').css("display", "block");
+    $("#bottomFooter").css("position","fixed");
+}
 /*DONE*/
 function hideForWelcomeButtonClicked(){
     $(document.getElementById("about")).hide();
@@ -112,11 +115,6 @@ function showLogin() {
     $('#score_time_life').css('display', 'none');
     $("#footer").css("position","fixed");
     clearIntervals();
-    /*if(StopSoungEffects) {
-        stopSong();
-        stop_soundEffect();
-        StopSoungEffects = false;
-    }*/
     CreepyMusic.pause();
 }
 function hideForLoginButtonClicked(){
