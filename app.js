@@ -1192,3 +1192,23 @@ function gameOver() {
     }
     return true;
 }
+
+
+/*########### TODO: I'm going to try using those functions to fix the game area so it fits the browser window size! don't erase!*/
+// dynamic weighted footer
+/*
+var watchFooter = function() {
+    // define the height variable
+    var footerHeight;
+    // get the height of the footer and store it in 'footerHeight'
+    footerHeight = $('#bottomFooter').outerHeight();
+    // Share that info with the dependent elements
+    $('.footer-buffer').css('height', footerHeight);
+    $('.container.master').css('margin-bottom', -(footerHeight));
+};
+
+// run on window resize - and on load
+$(window).resize( function() {
+    watchFooter();
+}).trigger('resize');
+*/

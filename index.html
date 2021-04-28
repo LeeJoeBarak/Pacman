@@ -11,6 +11,7 @@
 <!------------------------------- BODY ---------------------------------------------------->
 
 <body>
+<div class='container master' >
 <!--LOGO placed on top area of screen -->
 <section class="topHeader">
     <div class="logo">
@@ -20,7 +21,6 @@
         </header>
     </div>
 </section>
-
 
 <!-- The "About" Modal -->
 <div id="myModal" class="modal" >
@@ -181,78 +181,72 @@
     </form>
     <button id="random_btn" onclick="randomSetting()"  type="submit" style="display: none">Fill Randomly</button>
 </div>
-
-
 <!-- #score_time_life -->
 <section>
-<div id="score_time_life" class="theGame" style="display: none">
+<div id="score_time_life" class="gameArea" style="display: none">
     <div id="frame">
         <!-- ALL LEFT SIDE PANEL OF THE GAME-->
         <div id="leftPanel" style="margin-left: auto">
-            <div id="player_name">
-                <h1>PLAYER NAME: <p id="pl_name" style="display: inline-flex"></p></h1>
-            </div>
-            <div id="score">
-                <label for="lblScore">SCORE:</label>
-                <input id="lblScore" type="text" size="15"/>
-            </div>
-            <div id="time">
-                <label for="lblTime">TIME:&nbsp;&nbsp;&nbsp;</label>
-                <input id="lblTime" type="text" size="15"/>
-            </div>
-            <div id="lives">
-                <!--        <label for="lbl_lLives">Live:&nbsp;&nbsp;&nbsp;</label>-->
-                <label>LIVE:</label>
-                <br>
-                <img id="image1" src='image/tumb.jpeg' style="display: none; float: left">
-                <img id="image2" src='image/tumb.jpeg' style="display: none; float: left">
-                <img id="image3" src='image/tumb.jpeg' style="display: none; float: left">
-                <img id="image4" src='image/tumb.jpeg' style="display: none; float: left">
-                <img id="image5" src='image/tumb.jpeg' style="display: none; float: left">
-                <img id="image6" src='image/tumb.jpeg' style="display: none; float: left">
-            </div>
-            <br>
-            <br>
-            <div id="newGame">
-                <button id="newGame_btn" type="reset" onclick="initGame()" class="gameButtons">New Game</button>
-            </div>
-            <br>
-            <div id="music">
-                <button id="stopSong" type="button" class="gameButtons" onclick="StopCreepySong()">Stop Song</button>
-                <button id="playSong" type="button" onclick="PlayCreepySong()" class="gameButtons">Play Music</button>
-            </div>
-            <br>
-            <div id="soundEffect">
-                <button id="stopEffect" type="button" class="gameButtons" onclick="stopSoundEffect()">Stop Sound
-                    Effect
-                </button>
-            </div>
-
+            <table>
+                <tr><td> <div id="player_name">
+                    <h1>Player name: <p id="pl_name" style="display: inline-flex"></p></h1>
+                </div></td></tr>
+                <tr><td><div id="lives">
+                    <label>Life Remaining:</label>
+                    <br>
+                    <img id="image1" src='image/tumb.jpeg' style="display: none; float: left">
+                    <img id="image2" src='image/tumb.jpeg' style="display: none; float: left">
+                    <img id="image3" src='image/tumb.jpeg' style="display: none; float: left">
+                    <img id="image4" src='image/tumb.jpeg' style="display: none; float: left">
+                    <img id="image5" src='image/tumb.jpeg' style="display: none; float: left">
+                    <img id="image6" src='image/tumb.jpeg' style="display: none; float: left">
+                </div></td></tr>
+                <tr><td><div id="score">
+                    <label for="lblScore">Score:</label>
+                    <input id="lblScore" class="rightPanel" type="text" size="15"/>
+                </div></td></tr>
+                <tr><td>  <div id="time">
+                    <label for="lblTime">Time:&nbsp;&nbsp;&nbsp;</label>
+                    <input id="lblTime" type="text" class="rightPanel" size="15"/>
+                </div></td></tr>
+                <tr><td><div id="newGame">
+                    <button id="newGame_btn" type="reset" onclick="initGame()" class="gameButtons">New Game</button>
+                </div></td></tr>
+                <tr><td> <div id="music">
+                    <button id="stopSong" type="button" class="gameButtons" onclick="StopCreepySong()">Stop Song</button>
+                    <button id="playSong" type="button" onclick="PlayCreepySong()" class="gameButtons">Play Music</button>
+                </div></td></tr>
+                <tr><td><div id="soundEffect">
+                    <button id="stopEffect" type="button" class="gameButtons" onclick="stopSoundEffect()">Stop Sound
+                        Effect
+                    </button>
+                </div></td></tr>
+            </table>
         </div>
         <!-- ALL MIDDLE PANEL - WHERE THE ACTUAL GAME IS -->
         <div id="game">
-            <canvas id="canvas" class="gameClass" height="600" width="600"></canvas>
+            <canvas id="canvas"  height="600" width="600"></canvas>
         </div>
         <!-- ALL RIGHT SIDE PANEL - WHERE WE SHOW THE MOVE-KEYS AND SETTINGS -->
         <div id="rightPanel">
             <table  class="settingsRightPanel">
                 <tr>
                     <td>
-                        <label id="btn_up">UP:</label>&nbsp;
+                        <label id="btn_up">Up key:</label>&nbsp;
                         <p id="up"><i class="arrow up"></i></p>&nbsp;
                     </td>
                     <td>
-                        &nbsp;<label id="btn_down">DOWN:</label>&nbsp;
+                        &nbsp;<label id="btn_down">Down key:</label>&nbsp;
                         <p id="down"><i class="arrow down"></i></p>&nbsp;
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        &nbsp;<label id="btn_right">RIGHT:</label>&nbsp;
+                        &nbsp;<label id="btn_right">Right key:</label>&nbsp;
                         <p id="right"><i class="arrow right"></i></p>&nbsp;
                     </td>
                     <td>
-                        &nbsp;<label id="btn_left">LEFT:</label>&nbsp;
+                        &nbsp;<label id="btn_left">Left key:</label>&nbsp;
                         <p id="left"><i class="arrow left"></i></p>&nbsp;
                     </td>
                 </tr>
@@ -286,12 +280,14 @@
 <div id="loading_img" hidden>
     <img src="image/ezgif.com-gif-maker.gif" alt="loading..." class="center">
 </div>
+<!-- ======================================== -->
+</div> <!-- .master-container -->
+
+</body>
+
 
 <!-- #footer BOTTOM -->
 <footer id="bottomFooter" class="bottomFooter">
     <p><Strong>developed by: Barak Yacouel <span>barakya@post.bgu.ac.il</span> & Lee Joe Barak <span>leejoe@post.bgu.ac.il</span> </Strong></p>
 </footer>
-
-</body>
-
 </html>

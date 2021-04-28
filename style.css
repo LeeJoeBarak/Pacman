@@ -3,6 +3,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #240a30;
+  margin: 0;
 }
 /* footer */
 footer.bottomFooter{
@@ -18,7 +19,12 @@ footer.bottomFooter{
   font-family:  "Comic Sans MS", sans-serif;
 }
 
-/* Welcom section */
+.container.master{
+  min-height: 100%;
+}
+
+
+  /* Welcom section */
 div.welcome{
   position: fixed;
   top: 10%;
@@ -87,7 +93,7 @@ div.logo{
 }
 
  /*Navigation Bar*/
-.navbar {/*todo: fix transition from register form to settings form -> menu goes to bottom of page*/
+.navbar {
   position: relative;
   padding-top: 2%;
   margin-bottom: 40px;
@@ -436,7 +442,7 @@ input#leftId:focus {
 }
 
 /*###  THE GAME  ####*/
-.theGame {
+.gameArea {
   position: fixed;
   margin-top: 10%;
   margin-bottom: 5%;
@@ -445,10 +451,16 @@ input#leftId:focus {
   font-family: "Night Mare", sans-serif;
   overflow: auto; /* Enable scroll if needed */
 }
+input.rightPanel{
+  font-size: 10px;
+  font-style: oblique;
+  font-family: "Night Mare", sans-serif;
+}
 
 div#frame {
   margin-top: 1%;
   margin-bottom: 5%;
+  padding-bottom: 20px;
   border-style: double;
   border-color:yellow;
   background-color: #32a87f;
@@ -527,34 +539,35 @@ table.settingsRightPanel{
   border-width: 0 3px 3px 0;
   display: inline-block;
   padding: 3px;
-  border-color: #3c3cef;
+  border-color: black;
 }
 
 .right {
+  background-image: url('http://www.clker.com/cliparts/7/d/2/1/11949855991300783204arrow-right-seagreen_ben_01.svg.thumb.png');
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
-  border-color: #3c3cef;
+  border-color: black;
 }
 
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
-  border-color: #3c3cef;
+  border-color: black;
 }
 
 .up {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
-  border-color: #3c3cef;
+  border-color: black;
 }
 
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
-  color: #3c3cef;
+  color: black;
 }
 
-.alert {
+.alert {/*TODO: WHAT IS THIS? */
   display: none;
   padding: 15px;
   background-color: #f44336;
