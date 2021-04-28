@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
-
-<!--todo: check if i can do *{dsplay: none;} instead of each element having that property-->
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAC-MAN</title>
+    <title>PACMAN</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css"/>
-    <link rel="icon" href="image/tit.jpg"/> <!--todo: change icon photo!!-->
-
 </head>
 <!------------------------------- BODY ---------------------------------------------------->
 
@@ -153,24 +149,24 @@
         <!--### onkeydown="changeUserKeysValues(event)" ###-->
        <!-- <input onchange="hideIcon(this);" Placeholder="Search" />--><!-- just for test-->
         <label for="upId" class="settingsFields">UP :</label>
-        <input id="upId" name="upId" class="settings" type="text" placeholder="arrowup" onkeydown="changeUserKeysValues(event)"><br>
+        <input id="upId" name="upId" class="settings" type="text" placeholder="arrow-up" onkeydown="changeUserKeysValues(event)"><br>
         <label for="downId"  class="settingsFields">DOWN :</label>
-        <input id="downId" name="downId" class="settings" type="text" placeholder="arrowdown" onkeydown="changeUserKeysValues(event)"><br>
+        <input id="downId" name="downId" class="settings" type="text" placeholder="arrow-down" onkeydown="changeUserKeysValues(event)"><br>
         <label for="rightId" class="settingsFields">RIGHT :</label>
-        <input id="rightId" name="rightId" class="settings" type="text" placeholder="arrowright"  onkeydown="changeUserKeysValues(event)"><br>
+        <input id="rightId" name="rightId" class="settings" type="text" placeholder="arrow-right"  onkeydown="changeUserKeysValues(event)"><br>
         <label for="leftId" class="settingsFields">LEFT :</label>
-        <input id="leftId" name="leftId" type="text" class="settings" placeholder="arrowleft" onkeydown="changeUserKeysValues(event)"><br>
+        <input id="leftId" name="leftId" type="text" class="settings" placeholder="arrow-left" onkeydown="changeUserKeysValues(event)"><br>
         <!--### Choose Food -->
         <label for="food" class="settingsFields">How much food do you want? </label>
         <input id="food" type="number" name="food"><br>
         <!-- Choose Colors -->
         <p class="pleaseFill">Choose Colors</p>
         <label for="ball_5_points"  class="settingsFields">Choose color for 5 points worth :</label>
-        <input type="color" id="ball_5_points" name="ball_5_points" value="#ff0000"><br>
+        <input type="color" id="ball_5_points" name="ball_5_points" value="#8b4513" ><br>
         <label for="ball_15_points" class="settingsFields">Choose color for 15 points worth :</label>
-        <input type="color" id="ball_15_points" name="ball_15_points" value="#0000ff"><br>
+        <input type="color" id="ball_15_points" name="ball_15_points" value="#05ff86" ><br>
         <label for="ball_25_points"  class="settingsFields">Choose color for 25 points worth :</label>
-        <input type="color" id="ball_25_points" name="ball_25_points" value="#ffff00"><br>
+        <input type="color" id="ball_25_points" name="ball_25_points" value="#ffbafa" ><br>
         <!-- Choose Time -->
         <label for="setTime" class="settingsFields">How much time do you want to play? </label>
         <input id="setTime" name="setTime" type="number"><br>

@@ -306,6 +306,7 @@ function randomSetting() {
 }
 
 function setDefaultValuesForSettingsBoxes() {//set the default keys to arrows
+    setDefaultColorsInSettings();
     document.getElementById("food").value = null;
     document.getElementById("monsters").value = null;
     document.getElementById("setTime").value = null;
@@ -315,6 +316,11 @@ function setDefaultValuesForSettingsBoxes() {//set the default keys to arrows
     MoveDown = 40;
 }
 
+function setDefaultColorsInSettings(){
+    $("#ball_5_points").value = getRandomColor();
+    $("#ball_15_points").value = getRandomColor();
+    $("#ball_25_points").value = getRandomColor();
+}
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
