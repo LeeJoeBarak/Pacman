@@ -14,24 +14,15 @@ var food_remain = -1;
 var monster_remain = -1;
 var timeToPlay = -1;
 var extra_food = 1;
-var num_of_25_pt;
-var scoreOfTotalBoard = 0;
-var MonstersRHere;
 var boardExtraScore;
-var intervalMonster;
 var playerName;
 var extra_life = 1;
 var clock = 1;
-var gameSong;
 var StopSoungEffects = false;
-var intervalExtraScore;
-var n;
-var k;
 var intervals = [];
 var CellHeight;
 var CellWidth;
 var MonstersRHere;
-var ExtraScoreMoves;
 var color;
 var pacmanRight = true;
 var pacmanLeft = false;
@@ -44,7 +35,12 @@ var columns =15;
 var lines = 15;
 var CreepyMusic = new Audio('audio/creepy.mp3');
 var GameCompleted = false;
-
+var ClockIsHere;
+var ClockMoveUp = true;
+var ClockRow;
+var ClockCol;
+var ClockEaten;
+// var IWantMusic = false;
 
 function funcExample(p1, p2) {
     return p1 * p2;   // The function returns the product of p1 and p2
@@ -209,6 +205,14 @@ function submitSettingsHandler(){//Show score_time_life
     $("#menu").css("position", "fixed");
     $('#score_time_life').css('display', 'block');
     displaySettingDuringTheGame();
+}
+
+function PlaceClock(){
+    var cell= findRandomEmptyCell(board);
+    ClockRow = cell[0];
+    ClockCol = cell[1];
+    ClockIsHere[ClockRow][ClockCol] = 10;
+    board[ClockRow][ClockCol] = 10;
 }
 
 function initializeGameDesign() {
@@ -419,12 +423,12 @@ $(function() {
             insertUserToDB();
         },
         invalidHandler: function(event, validator) {
-            var errors = validator.numberOfInvalids();
+            let errors = validator.numberOfInvalids();
             if (errors) {
                 var message = errors == 1
                     ? 'Please correct the following error:\n'
                     : 'Please correct the following ' + errors + ' errors.\n';
-                var errors = "";
+                errors = "";
                 if (validator.errorList.length > 0) {
                     for (x=0;x<validator.errorList.length;x++) {
                         errors += "\n\u25CF " + validator.errorList[x].message;
@@ -587,24 +591,28 @@ function Start() {
     score = 0;
     pac_color = "yellow";
     var food_remain = parseInt($(document.getElementById("food")).val());
-    pacmanRemain = 1;
     var monster_remain = parseInt($(document.getElementById("monsters")).val());;
     var remaining_15_pt = 0.3 *food_remain;
     var remaining_5_pt= 0.6 * food_remain;
     var remaining_25_pt = food_remain - remaining_5_pt - remaining_15_pt;
+    ClockEaten = false;
 
-
+    ClockIsHere= new Array();
     MonstersRHere = new Array();
+
     for (var i = 0; i < lines; i++) {
         MonstersRHere[i] = new Array();
+        ClockIsHere[i] = new Array();
         for (var j= 0 ; j<columns ; j++){
             MonstersRHere[i][j] =0;
+            ClockIsHere[i][j] =0;
         }
     }
 
     start_time = new Date();
     for (var i = 0; i < lines; i++) {
         board[i] = new Array();
+
         //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
         for (var j = 0; j < columns; j++) {
             let cell= "" +i + "," +j;
@@ -630,31 +638,12 @@ function Start() {
 
 
     }
-    if(pacmanRemain > 0 ){
-        emptyCell = findRandomEmptyCell(board);
-        shape.i = emptyCell[0];
-        shape.j = emptyCell[1];
-        board[shape.i][shape.j] = 2;
-        pacmanRemain--;
-    }
-    while (remaining_5_pt > 0) {
-        emptyCell = findRandomEmptyCell(board);
-        board[emptyCell[0]][emptyCell[1]] = 5;
-        remaining_5_pt--;
-        food_remain--;
-    }
-    while (remaining_15_pt > 0) {
-        emptyCell = findRandomEmptyCell(board);
-        board[emptyCell[0]][emptyCell[1]] = 6;
-        remaining_15_pt--;
-        food_remain--;
-    }
-    while (remaining_25_pt > 0) {
-        emptyCell = findRandomEmptyCell(board);
-        board[emptyCell[0]][emptyCell[1]] = 3;
-        remaining_25_pt--;
-        food_remain--;
-    }
+    PlaceClock();
+    PlacePacman();
+    PlaceFives(remaining_5_pt)
+    PlaceFifteen(remaining_15_pt)
+    PlaceTwentyFive(remaining_25_pt);
+    
     keysDown = {};
     addEventListener(
         "keydown",
@@ -676,9 +665,43 @@ function Start() {
         false
     );
     interval = setInterval(UpdatePacmanPosition, 350);
-    interval = setInterval(UpdateMonsterPosition, 1000);
-    CreepyMusic.play();
-    GameCompleted = false;
+    interval = setInterval(UpdateMonsterPosition, 1200);
+    interval = setInterval(UpdateClockPosition, 1000);
+    interval = setInterval(Draw, 300);
+}
+
+function PlaceTwentyFive(remaining_25_pt) {
+    while (remaining_25_pt > 0) {
+        emptyCell = findRandomEmptyCell(board);
+        board[emptyCell[0]][emptyCell[1]] = 3;
+        remaining_25_pt--;
+        food_remain--;
+    }
+}
+
+function PlaceFifteen(remaining_15_pt) {
+    while (remaining_15_pt > 0) {
+        emptyCell = findRandomEmptyCell(board);
+        board[emptyCell[0]][emptyCell[1]] = 6;
+        remaining_15_pt--;
+        food_remain--;
+    }
+}
+
+function PlacePacman() {
+    emptyCell = findRandomEmptyCell(board);
+    shape.i = emptyCell[0];
+    shape.j = emptyCell[1];
+    board[shape.i][shape.j] = 2;
+}
+
+function PlaceFives(numOfFives){
+    while (numOfFives > 0) {
+        emptyCell = findRandomEmptyCell(board);
+        board[emptyCell[0]][emptyCell[1]] = 5;
+        numOfFives--;
+        food_remain--;
+    }
 }
 
 function findRandomEmptyCell(board) {
@@ -882,6 +905,10 @@ function UpdatePacmanPosition() {
             FruitAudio.play();
         }
     }
+    if(ClockIsHere[shape.i][shape.j] === 10 ){
+        ClockIsHere[shape.i][shape.j] =0;
+        addTime();
+    }
     let MonsPacVal = MonstersRHere[shape.i][shape.j];
     if (MonsPacVal===7){
         MeetMonster(7);
@@ -899,7 +926,7 @@ function UpdatePacmanPosition() {
     if (score >= 75 && time_elapsed <= 10 && pac_color!= "green") {
         pac_color = "green";
     }
-    if (score == 200  && !GameCompleted) {
+    if (score >= 200  && !GameCompleted) {
         window.clearInterval(interval);
         window.alert("Game completed");
         /*var audioDeath = new Audio('audio/pacman_death.wav');
@@ -907,9 +934,48 @@ function UpdatePacmanPosition() {
         CreepyMusic.pause();
         displaySettings();
         GameCompleted= true;
-    } else {
-        Draw();
     }
+}
+
+function UpdateClockPosition(){
+    if(!ClockEaten){
+        if(ClockMoveUp && board[ClockRow][ClockCol-1]!=4 && ClockCol >1){
+            ClockIsHere[ClockRow][ClockCol]=0;
+            ClockIsHere[ClockRow][ClockCol - 1]=10;
+            ClockCol--;
+        }
+        else if(!ClockMoveUp && board[ClockRow][ClockCol + 1]!=4 && ClockCol <14){
+            ClockIsHere[ClockRow][ClockCol]=0;
+            ClockIsHere[ClockRow][ClockCol + 1]=10;
+            ClockCol++;
+        }
+        else{//} if(board[ClockRow][ClockCol - 1]===4 && board[ClockRow][ClockCol + 1]===4){
+            if(board[ClockRow-1][ClockCol]!=4 && ClockRow >1){
+                ClockIsHere[ClockRow][ClockCol]=0;
+                ClockIsHere[ClockRow-1][ClockCol]=10;
+                ClockRow--;
+            }
+            else if(board[ClockRow+1][ClockCol]!=4 && ClockRow <14){
+                ClockIsHere[ClockRow][ClockCol]=0;
+                ClockIsHere[ClockRow+1][ClockCol]=10;
+                ClockRow++;
+            }
+        }
+        //Update time if neceserry
+        if(board[ClockRow][ClockCol] == 2 ){
+            ClockIsHere[ClockRow][ClockCol]=0;
+            addTime();
+        }
+    }
+
+
+}
+
+function addTime(){
+    ClockIsHere[shape.i][shape.j] =0;
+    time_elapsed = time_elapsed +10;
+    window.alert("You Got 10 seconds!!");
+    ClockEaten =true;
 }
 
 function UpdateMonsterPosition(){
@@ -1000,9 +1066,16 @@ function MeetMonster(MonsVal){
     }
 
 
-    if(lives==0 && !GameCompleted){
+    if(lives===0 && !GameCompleted && score >100){
         window.clearInterval(interval);
-        window.alert("Game completed");
+        window.alert("loser!");
+        CreepyMusic.pause();
+        displaySettings();
+        GameCompleted = true;
+    }
+    else if(lives===0 && !GameCompleted){
+        window.clearInterval(interval);
+        window.alert("You are better than " + score + " points!!");
         CreepyMusic.pause();
         displaySettings();
         GameCompleted = true;
@@ -1038,7 +1111,9 @@ function MeetMonster(MonsVal){
         clearIntervals();
 
         intervals.push(setInterval(UpdatePacmanPosition, 150));
-        intervals.push(setInterval(UpdateMonsterPosition, 750));
+        intervals.push(setInterval(UpdateMonsterPosition, 1200));
+        interval = setInterval(UpdateClockPosition, 1000);
+        interval = setInterval(Draw, 300);
     }
 
 }
@@ -1082,6 +1157,8 @@ function initGame() {
     clearIntervals();
     Start();
     Draw();
+    CreepyMusic.play();
+    GameCompleted = false;
     playSong();
     return false;
 }
