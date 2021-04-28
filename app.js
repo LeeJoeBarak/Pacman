@@ -11,7 +11,7 @@ var MoveDown = 40;
 var MoveLeft = 37;
 var MoveRight = 39;
 var foodRemain = -1;
-var NumOfmonsters = -1;
+var MonstersNumber = -1;
 var timeToPlay = -1;
 var playerName;
 var StopSoungEffects = false;
@@ -148,7 +148,7 @@ function hideForRegisterButtonClicked(){
 /* form[name=settings Handler */
 $(function() {
     $("form[name='settings']").validate({
-        rules: { // Specify validation rules
+        rules: { // validation rules
             food: {
                 required: true,
                 min: 50,
@@ -164,7 +164,7 @@ $(function() {
                 min: 60,
             },
         },
-        messages: { // Specify validation error messages
+        messages: { // validation error messages
             food: {
                 required: "you forgot to fill in the amount of food",
                 min: "you forgot to choose a number between 50 and 90",
@@ -182,7 +182,7 @@ $(function() {
         },
         submitHandler: function(form) {
             submitSettingsHandler();
-            initializeGameDesign();/*todo: relace some stuff in initializeGameDesign() */
+            initializeGameDesign();
         },
         invalidHandler: function(form, validator) {
             var errors = validator.numberOfInvalids();
@@ -231,23 +231,17 @@ function initializeGameDesign() {
 function displaySettingDuringTheGame() {
     // initSetting();
     document.getElementById('pl_name').innerHTML = playerName;
-    if($('#upId').val()){/*Input element in Settings Form with id="upId"*/
-        document.getElementById('up').innerHTML = document.getElementById("upId").value;
-    }
-    else {
-        document.getElementById('up').innerHTML;
-    }
     if($('#downId').val()){
         document.getElementById('down').innerHTML = document.getElementById("downId").value;
     }
     else {
         document.getElementById('down').innerHTML;
     }
-    if($('#rightId').val()){
-        document.getElementById('right').innerHTML = document.getElementById("rightId").value;
+    if($('#upId').val()){/*Input element in Settings Form with id="upId"*/
+        document.getElementById('up').innerHTML = document.getElementById("upId").value;
     }
     else {
-        document.getElementById('right').innerHTML;
+        document.getElementById('up').innerHTML;
     }
     if($('#leftId').val()){
         document.getElementById('left').innerHTML = document.getElementById("leftId").value;
@@ -255,6 +249,13 @@ function displaySettingDuringTheGame() {
     else{
         document.getElementById('left').innerHTML;
     }
+    if($('#rightId').val()){
+        document.getElementById('right').innerHTML = document.getElementById("rightId").value;
+    }
+    else {
+        document.getElementById('right').innerHTML;
+    }
+
     document.getElementById('balls').innerHTML = document.settings.food.value;
     document.getElementById('timePlay').innerHTML = document.settings.setTime.value;
     document.getElementById('mons').innerHTML = document.settings.monsters.value;
@@ -342,11 +343,11 @@ function getRandomFoodAmount(){
 }
 
 function getRandomMonstersAmount(){
-    NumOfmonsters = -1;
-    while (NumOfmonsters < 1 || NumOfmonsters > 4) {
-        NumOfmonsters = parseInt(10 * Math.random());
+    MonstersNumber = -1;
+    while (MonstersNumber < 1 || MonstersNumber > 4) {
+        MonstersNumber = parseInt(10 * Math.random());
     }
-    return NumOfmonsters;
+    return MonstersNumber;
 }
 
 function getRandomTimeAmount(){
@@ -375,13 +376,16 @@ function displaySettings() {
 
 /* form[name=Registration Handler */
 $(function() {
-    $.validator.addMethod("lettersonly", function(value, element) {
-        return this.optional(element) || /^[a-z]+$/i.test(value);
-    }, "only letters allowed");
 
     $.validator.addMethod("alphanumeric", function(value, element) {
         return this.optional(element) || /^.*(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/i.test(value);
     }, "your password must include both letters and numbers");
+
+
+    $.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z]+$/i.test(value);
+    }, "only letters allowed");
+
 
     // Initialize form validation on the registration form.
     // It has the name attribute "registration"
@@ -452,8 +456,8 @@ $(function() {
 });
 
 function insertUserToDB() {
-    var user_name = document.getElementById("user_name").value;
-    var password =  document.getElementById("user_password").value;
+    var user_name = document.getElementById("user_Name").value;
+    var password =  document.getElementById("user_Password").value;
     var firstName = document.getElementById("userFirstName").value;
     var lastName = document.getElementById("userLastName").value;
     var userMail = document.getElementById("userMail").value;
@@ -988,54 +992,55 @@ function UpdateMonsterPosition(){
             let CellVal= MonstersRHere[i][j];
             if (CellVal === 7 || CellVal === 9 ) {
                 var randomNum = Math.floor(Math.random() * 2);/*0,1*/
-                var notMove = true;
+                var StayFoot = true;
 
                 //monster get down
                 if (randomNum === 0 && Math.abs(((i + 1) - shape.i) < Math.abs((i - 1) - shape.i)) && board[i + 1][j] !== 4 && MonstersRHere[i + 1][j] !== 7) {
+                    StayFoot = false;
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i + 1][j] = CellVal;
-                    notMove = false;
                 }
                 //monster get up
                 else if (randomNum === 0 && Math.abs(((i + 1) - shape.i) > Math.abs((i - 1) - shape.i)) && board[i - 1][j] !== 4 && MonstersRHere[i - 1][j] !== 7) {
+                    StayFoot = false;
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i - 1][j] = CellVal;
-                    notMove = false;
+
                 }
                 //monster get right
                 else if (randomNum === 1 && Math.abs(((j + 1) - shape.j) < Math.abs((j - 1) - shape.j)) && board[i][j + 1] !== 4 && MonstersRHere[i][j + 1] !== 7 && MonstersRHere[i][j + 1] !== 9) {
+                    StayFoot = false;
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i][j + 1] = CellVal;
-                    notMove = false;
                 }
                 //monster get left
                 else if (randomNum === 1 && Math.abs(((j + 1) - shape.j) > Math.abs((j - 1) - shape.j)) && board[i][j - 1] !== 4 && MonstersRHere[i][j - 1] !==7 && MonstersRHere[i][j - 1] !== 9) {
+                    StayFoot = false;
                     MonstersRHere[i][j] = 0;
                     MonstersRHere[i][j - 1] = CellVal;
-                    notMove = false;
-                } else if (notMove || shape.i == i || shape.j == j) {
-                    while (notMove) {
-                        var randomMoveIfStack = Math.floor(Math.random() * 4);/*0,1*/
+                } else if (StayFoot || shape.j == j || shape.i == i) {
+                    while (StayFoot) {
+                        var randomMoveIfStack = Math.floor(Math.random() * 4);// number between o to 3
                         if (randomMoveIfStack === 0 && i-1 >= 0 && i-1 <= 14 && board[i - 1][j] !== 4 && MonstersRHere[i - 1][j] !== 7 && MonstersRHere[i-1][j] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i - 1][j] = CellVal;
-                            notMove = false;
+                            StayFoot = false;
                         } else if (randomMoveIfStack === 1  && i+1 >= 0 && i+1 <= 14 && board[i + 1][j] !== 4 && MonstersRHere[i + 1][j] !== 7 && MonstersRHere[i+1][j] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i + 1][j] = CellVal;
-                            notMove = false;
+                            StayFoot = false;
                         }
-                        //get right
+                        //go right
                         else if (randomMoveIfStack === 2  && (j+1 >= 0) && (j+1 <= 14) && board[i][j + 1] !== 4 && MonstersRHere[i][j + 1] !== 7&& MonstersRHere[i+1][j] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i][j + 1] = CellVal;
-                            notMove = false;
+                            StayFoot = false;
                         }
-                        //get left
+                        //go left
                         else if (randomMoveIfStack === 3 && j >0 && board[i][j - 1] !== 4 && MonstersRHere[i][j - 1] !== 7 && MonstersRHere[i][j - 1] !== 9) {
                             MonstersRHere[i][j] = 0;
                             MonstersRHere[i][j - 1] = CellVal;
-                            notMove = false;
+                            StayFoot = false;
                         }
                     }
                 }
@@ -1061,7 +1066,7 @@ function MeetMonster(MonsVal){
     lives--;
     board[shape.i][shape.j] = 0;
     score = score - 10;
-    NumOfmonsters = parseInt($(document.getElementById("monsters")).val());
+    MonstersNumber = parseInt($(document.getElementById("monsters")).val());
 
     pacmanRemain=0;
     //setTimeout(continueGameLifeDown, 500);
@@ -1102,8 +1107,8 @@ function MeetMonster(MonsVal){
                     board[i][j] = 0;
                 }
                 MonstersRHere[i][j] = 0;
-                if(NumOfmonsters > 0 && ((i === 0 || i === 14) && (j === 0 || j === 14))){
-                    if(NumOfmonsters % 2 === 0){
+                if(MonstersNumber > 0 && ((i === 0 || i === 14) && (j === 0 || j === 14))){
+                    if(MonstersNumber % 2 === 0){
                         board[i][j] = 7;
                         MonstersRHere[i][j] = 7;
                     }
@@ -1111,7 +1116,7 @@ function MeetMonster(MonsVal){
                         board[i][j] = 9;
                         MonstersRHere[i][j] = 9;
                     }
-                    NumOfmonsters--;
+                    MonstersNumber--;
                 }
             }
         }
@@ -1155,7 +1160,7 @@ function initGame() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context = canvas.getContext("2d");
     foodRemain = parseInt($(document.getElementById("food")).val());
-    NumOfmonsters = parseInt($(document.getElementById("monsters")).val());
+    MonstersNumber = parseInt($(document.getElementById("monsters")).val());
     timeToPlay = parseInt($(document.getElementById("setTime")).val());
     pacmanRight = true;
     pacmanLeft = false;
@@ -1165,7 +1170,6 @@ function initGame() {
         removeLifeIcon(6);
     }
     lives = 5;
-    extra_life = 1;
     displayLifeIcons();
     clearIntervals();
     Start();
