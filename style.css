@@ -184,7 +184,7 @@ form.register{
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  font-family: 'Alef', serif;
+  font-family: "Night Mare", serif;
   font-size: 14px;
   color: white;
 }
@@ -380,44 +380,6 @@ h4{
 
 /*##################################################################################*/
 
-.arrow {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  border-color: #3c3cef;
-}
-
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  border-color: #3c3cef;
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-  border-color: #3c3cef;
-}
-
-.up {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-  border-color: #3c3cef;
-}
-
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  color: #3c3cef;
-}
-
-.alert {
-  display: none;
-  padding: 15px;
-  background-color: #f44336;
-  color: white;
-}
 .closebtn {
   margin-left: 15px;
   color: white;
@@ -474,35 +436,46 @@ input#leftId:focus {
 }
 
 /*###  THE GAME  ####*/
-
-
 .theGame {
-  color: saddlebrown;
+  position: fixed;
+  margin-top: 10%;
+  margin-bottom: 5%;
   width: 1400px;
-  padding-top: 150px;
-  font-family: "Night Mare";
+ /* padding-top: 150px;*/
+  font-family: "Night Mare", sans-serif;
+  overflow: auto; /* Enable scroll if needed */
 }
 
 div#frame {
+  margin-top: 1%;
+  margin-bottom: 5%;
   border-style: double;
   border-color: red;
-  background-color: #40d0f7;
+  background-color: #32a87f;
   overflow: auto;
   display: inline-flex;
   width: -moz-max-content;
+  overflow: auto; /* Enable scroll if needed */
 }
 
 div#left_side {
   position: relative;
   float: left;
-  /*width: 20%;*/
-  /*width: fit-content;*/
   width: border-box;
   text-align: center;
   border: 3px solid grey;
   border-radius: 5px;
-  background-image: linear-gradient(to left, #3c3cef, aquamarine);
+  background-color: #826233;
+  color: yellowgreen;
   overflow: auto;
+}
+div#right_side{
+  background-color: #7e08fc;
+  color: greenyellow;
+  font-family: "Night Mare", sans-serif;
+  font-weight: bold;
+  overflow: auto; /* Enable scroll if needed */
+  /*background-image: linear-gradient(to left, #4e3063, #331d42);*/
 }
 
 div#game {
@@ -548,3 +521,42 @@ div#game {
 
 }
 
+/*todo: CHANGE!! */
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  border-color: #3c3cef;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  border-color: #3c3cef;
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  border-color: #3c3cef;
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  border-color: #3c3cef;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  color: #3c3cef;
+}
+
+.alert {
+  display: none;
+  padding: 15px;
+  background-color: #f44336;
+  color: white;
+}
