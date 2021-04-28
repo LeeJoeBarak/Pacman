@@ -572,19 +572,7 @@ const wallCells = [
     "11,6", "12,6", "13,6", "14,6",
     "11,9", "11,10", "11,11", "11,13", "12,9", , "13,9", , "14,9",
 ];
-function playSong() {
-    /*
-        gameSong.play();
-    */
-}
-function stopSong() {
-    /*
-        gameSong.pause();
-    */
-}
-function stop_soundEffect() {
-    StopSoungEffects = true;
-}
+
 
 function Start() {
     board = new Array();
@@ -643,7 +631,7 @@ function Start() {
     PlaceFives(remaining_5_pt)
     PlaceFifteen(remaining_15_pt)
     PlaceTwentyFive(remaining_25_pt);
-    
+
     keysDown = {};
     addEventListener(
         "keydown",
@@ -750,6 +738,8 @@ function Draw() {
     TumbLife.src = "image/tumb.jpeg";
     var wallPic = new Image();
     wallPic.src = "image/pumpkinWall.jpg";
+    var Clock= new Image();
+    Clock.src = "image/Clock.jfif";
     color = getRandomColor();
     for (var i = 0; i < lines; i++) {
         for (var j = 0; j < columns; j++) {
@@ -764,6 +754,9 @@ function Draw() {
             }
             else if (MonsVal === 9) {
                 context.drawImage(ghostMonster, center.x - CellWidth/2, center.y - CellHeight/2);
+            }
+            else if(ClockIsHere[i][j]===10){
+                context.drawImage(Clock, center.x - CellWidth/2, center.y - CellHeight/2);
             }
             else if (bordVal === 2 && pacmanLeft && lives > 0) {
                 context.beginPath();
@@ -1159,7 +1152,6 @@ function initGame() {
     Draw();
     CreepyMusic.play();
     GameCompleted = false;
-    playSong();
     return false;
 }
 function UpdateExtraScorePosition() {
