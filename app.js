@@ -88,7 +88,7 @@ function hideForWelcomeButtonClicked(){
     $(document.getElementById("login")).hide();
     $(document.getElementById("settings")).hide();
     $("#random_btn").css("display", "none");
-    $('#score_time_life').css('display', 'none');
+    $('#gamePersonalStatus').css('display', 'none');
 }
 
 /* ################# LOGIN ##########################*/
@@ -104,7 +104,7 @@ function showLogin() {
     hideForLoginButtonClicked();
     $(document.getElementById("login")).show();
     $("#random_btn").css("display", "none");
-    $('#score_time_life').css('display', 'none');
+    $('#gamePersonalStatus').css('display', 'none');
     $("#footer").css("position","fixed");
     clearIntervals();
     CreepyMusic.pause();
@@ -143,7 +143,7 @@ function hideForRegisterButtonClicked(){
     $(document.getElementById("about")).hide();
     $(document.getElementById("login")).hide();
     $(document.getElementById("settings")).hide();
-    $('#score_time_life').css('display', 'none');
+    $('#gamePersonalStatus').css('display', 'none');
 }
 /* form[name=settings Handler */
 $(function() {
@@ -203,11 +203,11 @@ $(function() {
     });
 });
 
-function submitSettingsHandler(){//Show score_time_life
+function submitSettingsHandler(){//Show gamePersonalStatus
     $("#settings").css("display", "none");
     $("#random_btn").css("display", "none");
     $("#menu").css("position", "fixed");
-    $('#score_time_life').css('display', 'block');
+    $('#gamePersonalStatus').css('display', 'block');
     displaySettingDuringTheGame();
 }
 
@@ -367,7 +367,7 @@ function displaySettings() {
     $('#settings').css('display', 'block');
     $("#random_btn").css("display","block");
     $('#game').css('display', 'block');
-    $('#score_time_life').css('display', 'none');
+    $('#gamePersonalStatus').css('display', 'none');
 }
 
 
