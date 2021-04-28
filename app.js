@@ -76,20 +76,17 @@ $.ajax({
     }
 });
 
-
+/*DONE*/
 $(document).ready(function () {
     $("#welcomeBtn").click(function () {
         clearIntervals();
         hideForWelcomeButtonClicked();
         $('#welcome').css("display", "block");
-
-      /*  $("#random_btn").css("display", "none");
-        $('#score_time_life').css('display', 'none');*/
         $("#bottomFooter").css("position","fixed");
         stopSong();/*todo: calling an empty function!*/
     });
 });
-
+/*DONE*/
 function hideForWelcomeButtonClicked(){
     $(document.getElementById("about")).hide();
     $(document.getElementById("register")).hide();
@@ -99,11 +96,36 @@ function hideForWelcomeButtonClicked(){
     $('#score_time_life').css('display', 'none');
 }
 
+/* ################# LOGIN ##########################*/
+/*DONE*/
 $(document).ready(function () {
     $("#loginBtn").click(function () {
         showLogin();
     });
 });
+function showLogin() {
+    document.getElementById("name").value = null;
+    document.getElementById("userPassword").value = null;
+    hideForLoginButtonClicked();
+    $(document.getElementById("login")).show();
+    $("#random_btn").css("display", "none");
+    $('#score_time_life').css('display', 'none');
+    $("#footer").css("position","fixed");
+    clearIntervals();
+    if(StopSoungEffects) {
+        stopSong();
+        stop_soundEffect();
+        StopSoungEffects = false;
+    }
+}
+function hideForLoginButtonClicked(){
+    $(document.getElementById("welcome")).hide();
+    $(document.getElementById("about")).hide();
+    $(document.getElementById("register")).hide();
+    $(document.getElementById("settings")).hide();
+}
+
+
 
 $(document).ready(function () {
     $("#registerBtn").click(function () {
@@ -331,25 +353,6 @@ function displaySettings() {
 }
 
 
-/* ################# LOGIN ##########################*/
-function showLogin() {
-    document.getElementById("name").value = null;
-    document.getElementById("userPassword").value = null;
-    $(document.getElementById("welcome")).hide();
-    $(document.getElementById("about")).hide();
-    $(document.getElementById("register")).hide();
-    $(document.getElementById("settings")).hide();
-    $(document.getElementById("login")).show();
-    $("#random_btn").css("display", "none");
-    $('#score_time_life').css('display', 'none');
-    $("#footer").css("position","fixed");
-    clearIntervals();
-    if(!StopSoungEffects) {
-        stopSong();
-        stop_soundEffect();
-        StopSoungEffects = false;
-    }
-}
 
 /*################# registration ###################*/
 
@@ -543,6 +546,19 @@ const wallCells = [
     "11,6", "12,6", "13,6", "14,6",
     "11,9", "11,10", "11,11", "11,13", "12,9", , "13,9", , "14,9",
 ];
+function playSong() {
+    /*
+        gameSong.play();
+    */
+}
+function stopSong() {
+    /*
+        gameSong.pause();
+    */
+}
+function stop_soundEffect() {
+    StopSoungEffects = true;
+}
 
 function Start() {
     board = new Array();
@@ -1019,16 +1035,7 @@ function removeLifeIcon(i) {
     }
 }
 
-function playSong() {
-    /*
-        gameSong.play();
-    */
-}
-function stopSong() {
-    /*
-        gameSong.pause();
-    */
-}
+
 function initGame() {
     clearIntervals();
     $("#timeAlert").css("display", "none");
@@ -1102,9 +1109,7 @@ function alertNote(note,timeToAlert) {
         alert(note);
     }, timeToAlert);
 }
-function stop_soundEffect() {
-    StopSoungEffects = true;
-}
+
 function gameOver() {
     for (var i = 0; i < lines; i++) {
         for(var j = 0; j < columns; j++){
