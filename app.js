@@ -59,27 +59,17 @@ $(document).ready(function () {
     localStorage.setItem("k", str);
 });
 
+$.ajax({
+    type: "POST",
+    url: "/savedata.php",
+    data: {
+        width        : $(window).width(),
+        height       : $(window).height(),
+        screen_width : screen.width,
+        screen_height: screen.height
+    }
+});
 
-
-/*###################################################################################*/
-
-/*
- #aboutBtn.Click -->
- HIDE: #register, #login, #welcome, #setting, #random_btn, #score_time_life */
-/*$(document).ready(function () {
-    $("#aboutBtn").click(function () {
-        $('#welcome').css("display", "none");
-        $(document.getElementById("register")).hide();
-        $(document.getElementById("login")).hide();
-        $(document.getElementById("settings")).hide();
-        $("#random_btn").css("display", "none");
-        $('#score_time_life').css('display', 'none');
-        $("#footer").css("position","fixed")
-        stopSong();
-        stop_soundEffect()
-        StopSoungEffects = false;
-    });
-});*/
 
 $(document).ready(function () {
     $("#welcomeBtn").click(function () {
@@ -350,6 +340,178 @@ function showLogin() {
 
 /*################# registration ###################*/
 
+
+/*################# todo: TO EDIT/ADD STUFF*/
+/* form[name=Registration Handler */
+$(function() {
+    $.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z]+$/i.test(value);
+    }, "Letters only please");
+
+    $.validator.addMethod("alphanumeric", function(value, element) {
+        return this.optional(element) || /^.*(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/i.test(value);
+    }, "Please use with letters and numbers");
+
+    // Initialize form validation on the registration form.
+    // It has the name attribute "registration"
+    $("form[name='registration']").validate({
+        // Specify validation rules
+        rules: {
+            user_name: "required",
+            user_password: {
+                required: true,
+                minlength: 6,
+                alphanumeric: true,
+            },
+            userFirstName: {
+                required: true,
+                lettersonly: true
+            },
+            userLastName: {
+                required: true,
+                lettersonly: true
+            },
+            userMail: {
+                required: true,
+                email: true
+            },
+            birthday: "required",
+        },
+        // Specify validation error messages
+        messages: {
+            user_name: "Username is required",
+            user_password: {
+                required: "Password is required",
+                minlength: "Password length should be 6",
+                maxlength: "Password length should be 6"
+            },
+            userFirstName: {
+                required: "First name is required",
+                lettersonly: "First name should contains only letters"
+            },
+            userLastName: {
+                required: "Last name is required",
+                lettersonly: "Last name should contains only letters"
+            },
+            userMail: {
+                required: "Email is required",
+                email: "Please enter a valid email address"
+            },
+            birthday: "Birthday is required",
+        },
+        submitHandler: function(form) {
+            // alert("Hi");
+            insertUserToDB();
+            // form.submit();
+        },
+        invalidHandler: function(event, validator) {
+            alert("Please check your registration values!")
+        }
+    });
+});
+function insertUserToDB() {
+    var user_name = document.getElementById("user_name").value;
+    var password =  document.getElementById("user_password").value;
+    var firstName = document.getElementById("userFirstName").value;
+    var lastName = document.getElementById("userLastName").value;
+    var userMail = document.getElementById("userMail").value;
+    var date = document.getElementById("birthday").value;
+    if (localStorage.getItem(user_name) === null) {
+        let data = {
+            userName: user_name,
+            userPassword: password,
+            firstName: firstName,
+            lastName: lastName,
+            mail: userMail,
+            birthDay: date
+        };
+        document.forms[0].reset();
+        let str = JSON.stringify(data);
+        localStorage.setItem(user_name, str);
+        $('#register').css('display', 'none');
+        $("#loading_img").css("display","block");
+        setTimeout(displaySettings,2000);
+        playerName = userMail;
+    }
+    else {
+        alert("this user already exist");
+    }
+}
+function validateUserPassword() {
+    let userName = document.getElementById("name").value;
+    let userPassword = document.getElementById("userPassword").value;
+    let originalData = localStorage.getItem(userName);
+    console.info(originalData);
+    if (originalData === null || userName === "" || userPassword ==="") {
+        alert("You must fill all the labels before you enter the game");
+    }
+    else {
+        let dataObj = JSON.parse(originalData);
+        let psd = dataObj.userPassword;
+        let name = dataObj.userName;
+        if (userName === name && userPassword === psd) {
+            $('#login').css('display', 'none');
+            $("#loading_img").css("display","block");
+            setTimeout(displaySettings,2000);
+            playerName = userName;
+        }
+    }
+}
+function aboutModalHandler() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";  // display "about" modal
+    var btn = $("#myBtn");
+    /*close modal by:
+    * 1. clicking the "x" button
+    * 2. clicking anywhere outside the modal
+    * 3. clicking the Esc button */
+    window.onclick = function (event) { //clicks anywhere -> close modal
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+    var span = document.getElementById("closeAbout") // clicking the "x" button -> close modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    document.onkeydown = function (event) { // clicking the Esc button -> close modal
+        var x = event.keyCode;
+        if (x === 27) {
+            modal.style.display = "none";
+        }
+    }
+}
+function closeAbout_Clicked_X(event){
+    var span = document.getElementById("closeAbout") // clicking the "x" button -> close modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+}
+function closeAbout_ClickedAnywhere(event){
+    window.onclick = function (event) { //clicks anywhere -> close modal
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+function closeAbout_ClickedEsc(event){
+    document.onkeydown = function (event) { // clicking the Esc button -> close modal
+        var x = event.keyCode;
+        if (x === 27) {
+            modal.style.display = "none";
+        }
+    }
+}
+function showRegistration() {
+    clearIntervals();
+    $('#welcome').css("display", "none");
+    $(document.getElementById("about")).hide();
+    $(document.getElementById("login")).hide();
+    $(document.getElementById("register")).show();
+    $("#register").show(300);
+}
+
+
 /*############################## BARAKs CODE   ##########################################*/
 
 $(document).ready(function() {
@@ -368,7 +530,6 @@ const wallCells = [
     "11,6", "12,6", "13,6", "14,6",
     "11,9", "11,10", "11,11", "11,13", "12,9", , "13,9", , "14,9",
 ];
-
 
 function Start() {
     board = new Array();
@@ -845,216 +1006,16 @@ function removeLifeIcon(i) {
     }
 }
 
-
-/* form[name=Registration Handler */
-$(function() {
-    $.validator.addMethod("lettersonly", function(value, element) {
-        return this.optional(element) || /^[a-z]+$/i.test(value);
-    }, "Letters only please");
-
-    $.validator.addMethod("alphanumeric", function(value, element) {
-        return this.optional(element) || /^.*(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/i.test(value);
-    }, "Please use with letters and numbers");
-
-    // Initialize form validation on the registration form.
-    // It has the name attribute "registration"
-    $("form[name='registration']").validate({
-        // Specify validation rules
-        rules: {
-            user_name: "required",
-            user_password: {
-                required: true,
-                minlength: 6,
-                alphanumeric: true,
-            },
-            userFirstName: {
-                required: true,
-                lettersonly: true
-            },
-            userLastName: {
-                required: true,
-                lettersonly: true
-            },
-            userMail: {
-                required: true,
-                email: true
-            },
-            birthday: "required",
-        },
-        // Specify validation error messages
-        messages: {
-            user_name: "Username is required",
-            user_password: {
-                required: "Password is required",
-                minlength: "Password length should be 6",
-                maxlength: "Password length should be 6"
-            },
-            userFirstName: {
-                required: "First name is required",
-                lettersonly: "First name should contains only letters"
-            },
-            userLastName: {
-                required: "Last name is required",
-                lettersonly: "Last name should contains only letters"
-            },
-            userMail: {
-                required: "Email is required",
-                email: "Please enter a valid email address"
-            },
-            birthday: "Birthday is required",
-        },
-        submitHandler: function(form) {
-            // alert("Hi");
-            insertUserToDB();
-            // form.submit();
-        },
-        invalidHandler: function(event, validator) {
-            alert("Please check your registration values!")
-        }
-    });
-});
-
-
-function insertUserToDB() {
-    var user_name = document.getElementById("user_name").value;
-    var password =  document.getElementById("user_password").value;
-    var firstName = document.getElementById("userFirstName").value;
-    var lastName = document.getElementById("userLastName").value;
-    var userMail = document.getElementById("userMail").value;
-    var date = document.getElementById("birthday").value;
-    if (localStorage.getItem(user_name) === null) {
-        let data = {
-            userName: user_name,
-            userPassword: password,
-            firstName: firstName,
-            lastName: lastName,
-            mail: userMail,
-            birthDay: date
-        };
-        document.forms[0].reset();
-        let str = JSON.stringify(data);
-        localStorage.setItem(user_name, str);
-        $('#register').css('display', 'none');
-        $("#loading_img").css("display","block");
-        setTimeout(displaySettings,2000);
-        playerName = userMail;
-    }
-    else {
-        alert("this user already exist");
-    }
-}
-
-
-function validateUserPassword() {
-    let userName = document.getElementById("name").value;
-    let userPassword = document.getElementById("userPassword").value;
-    let originalData = localStorage.getItem(userName);
-    console.info(originalData);
-    if (originalData === null || userName === "" || userPassword ==="") {
-        alert("You must fill all the labels before you enter the game");
-    }
-    else {
-        let dataObj = JSON.parse(originalData);
-        let psd = dataObj.userPassword;
-        let name = dataObj.userName;
-        if (userName === name && userPassword === psd) {
-            $('#login').css('display', 'none');
-            $("#loading_img").css("display","block");
-            setTimeout(displaySettings,2000);
-            playerName = userName;
-        }
-    }
-}
-
-
-function aboutModalHandler() {
-    var modal = document.getElementById("myModal");
-    modal.style.display = "block";  // display "about" modal
-    var btn = $("#myBtn");
-    /*close modal by:
-    * 1. clicking the "x" button
-    * 2. clicking anywhere outside the modal
-    * 3. clicking the Esc button */
-    window.onclick = function (event) { //clicks anywhere -> close modal
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-    var span = document.getElementById("closeAbout") // clicking the "x" button -> close modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-    document.onkeydown = function (event) { // clicking the Esc button -> close modal
-        var x = event.keyCode;
-        if (x === 27) {
-            modal.style.display = "none";
-        }
-    }
-    /*// When the user clicks on the button, open the modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-    // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-    // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-   */
-}
-
-function closeAbout_Clicked_X(event){
-    var span = document.getElementById("closeAbout") // clicking the "x" button -> close modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-}
-function closeAbout_ClickedAnywhere(event){
-    window.onclick = function (event) { //clicks anywhere -> close modal
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-}
-function closeAbout_ClickedEsc(event){
-    document.onkeydown = function (event) { // clicking the Esc button -> close modal
-        var x = event.keyCode;
-        if (x === 27) {
-            modal.style.display = "none";
-        }
-    }
-}
-
-function showRegistration() {
-    clearIntervals();
-    $('#welcome').css("display", "none");
-    $(document.getElementById("about")).hide();
-    $(document.getElementById("login")).hide();
-    $(document.getElementById("register")).show();
-    $("#register").show(300);
-}
-
-/*###################################################################################*/
-
-
 function playSong() {
     /*
         gameSong.play();
     */
 }
-
 function stopSong() {
     /*
         gameSong.pause();
     */
 }
-
 function initGame() {
     clearIntervals();
     $("#timeAlert").css("display", "none");
@@ -1082,7 +1043,6 @@ function initGame() {
     playSong();
     return false;
 }
-
 function UpdateExtraScorePosition() {
     let currScorePositions = new Array();
     for (var i = 0; i < 15; i++) {
@@ -1124,20 +1084,14 @@ function UpdateExtraScorePosition() {
         }
     }
 }
-
-
 function alertNote(note,timeToAlert) {
     setTimeout(function () {
         alert(note);
     }, timeToAlert);
 }
-
-
 function stop_soundEffect() {
     StopSoungEffects = true;
 }
-
-
 function gameOver() {
     for (var i = 0; i < lines; i++) {
         for(var j = 0; j < columns; j++){
