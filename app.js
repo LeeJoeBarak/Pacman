@@ -83,6 +83,7 @@ $(document).ready(function () {
        CreepyMusic.pause();
     });
 });
+/*DONE*/
 function showWelcome(){
     clearIntervals();
     hideForWelcomeButtonClicked();
@@ -126,19 +127,24 @@ function hideForLoginButtonClicked(){
 
 $(document).ready(function () {
     $("#registerBtn").click(function () {
-        clearIntervals();
-        $('#welcome').css("display", "none");
-        $(document.getElementById("about")).hide();
-        $(document.getElementById("login")).hide();
-        $("#register").show(300);
-        $(document.getElementById("settings")).hide();
-        $("#random_btn").css("display", "none");
-        $('#score_time_life').css('display', 'none');
-        $("#footer").css("position","fixed");
-        stopSong();
+       showRegister();
     });
 });
-
+function showRegister(){
+    clearIntervals();
+    hideForRegisterButtonClicked();
+    $("#random_btn").css("display", "none");
+    $("#register").show(300);
+    $("#bottomFooter").css("position","fixed");
+    CreepyMusic.pause();
+}
+function hideForRegisterButtonClicked(){
+    $('#welcome').css("display", "none");
+    $(document.getElementById("about")).hide();
+    $(document.getElementById("login")).hide();
+    $(document.getElementById("settings")).hide();
+    $('#score_time_life').css('display', 'none');
+}
 /* form[name=settings Handler *//*todo: Validates the selected form  */
 $(function() {
     $("form[name='settings']").validate({
