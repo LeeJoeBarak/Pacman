@@ -45,6 +45,12 @@ var lines = 15;
 var CreepyMusic = new Audio('audio/creepy.mp3');
 var GameCompleted = false;
 
+
+function funcExample(p1, p2) {
+    return p1 * p2;   // The function returns the product of p1 and p2
+}
+
+
 /* defult user */
 $(document).ready(function () {
     let defUserName = {
@@ -74,17 +80,24 @@ $.ajax({
 $(document).ready(function () {
     $("#welcomeBtn").click(function () {
         clearIntervals();
-        $(document.getElementById("about")).hide();
-        $(document.getElementById("register")).hide();
-        $(document.getElementById("login")).hide();
+        hideForWelcomeButtonClicked();
         $('#welcome').css("display", "block");
-        $(document.getElementById("settings")).hide();
-        $("#random_btn").css("display", "none");
-        $('#score_time_life').css('display', 'none');
-        $("#footer").css("position","fixed");
-        stopSong();
+
+      /*  $("#random_btn").css("display", "none");
+        $('#score_time_life').css('display', 'none');*/
+        $("#bottomFooter").css("position","fixed");
+        stopSong();/*todo: calling an empty function!*/
     });
 });
+
+function hideForWelcomeButtonClicked(){
+    $(document.getElementById("about")).hide();
+    $(document.getElementById("register")).hide();
+    $(document.getElementById("login")).hide();
+    $(document.getElementById("settings")).hide();
+    $("#random_btn").css("display", "none");
+    $('#score_time_life').css('display', 'none');
+}
 
 $(document).ready(function () {
     $("#loginBtn").click(function () {
