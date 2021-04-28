@@ -121,6 +121,15 @@ $(document).ready(function () {
        showRegister();
     });
 });
+
+function StopCreepySong(){
+    CreepyMusic.pause();
+}
+
+function PlayCreepySong() {
+    CreepyMusic.play();
+}
+
 function showRegister(){
     clearIntervals();
     hideForRegisterButtonClicked();
@@ -1039,6 +1048,10 @@ function UpdateMonsterPosition(){
     }
 }
 
+function stopSoundEffect() {
+    StopSoungEffects = true;
+}
+
 function MeetMonster(MonsVal){
     removeLifeIcon(lives);
     lives--;
@@ -1063,9 +1076,16 @@ function MeetMonster(MonsVal){
         displaySettings();
         GameCompleted = true;
     }
-    else if(lives===0 && !GameCompleted){
+    else if(lives===0 && score<100 && !GameCompleted){
         window.clearInterval(interval);
         window.alert("You are better than " + score + " points!!");
+        CreepyMusic.pause();
+        displaySettings();
+        GameCompleted = true;
+    }
+    else if(lives===0 && score<100 && !GameCompleted){
+        window.clearInterval(interval);
+        window.alert("Winner!!");
         CreepyMusic.pause();
         displaySettings();
         GameCompleted = true;
@@ -1109,7 +1129,7 @@ function MeetMonster(MonsVal){
 }
 
 function displayLifeIcons() {
-    for (var i = 1; i <= lives; i++) {
+    for (let i = 1; i <= lives; i++) {
         imageName = "#image" + i;
         $(imageName).css("display", "block");
     }
@@ -1141,6 +1161,7 @@ function initGame() {
     }
     lives = 5;
     extra_life = 1;
+    displayLifeIcons();
     clearIntervals();
     Start();
     Draw();
