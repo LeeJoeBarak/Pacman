@@ -921,7 +921,7 @@ function UpdatePacmanPosition() {
     }
     if (score >= 200  && !GameCompleted) {
         window.clearInterval(interval);
-        window.alert("Game completed");
+        window.alert("Winner!!");
         /*var audioDeath = new Audio('audio/pacman_death.wav');
         audioDeath.play();*/
         CreepyMusic.pause();
