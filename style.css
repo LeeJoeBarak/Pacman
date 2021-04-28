@@ -7,13 +7,12 @@ body{
 /* footer */
 footer.bottomFooter{
   position: fixed;
-  min-height: 30px;
+  /*min-height: 100%;*/
   left: 0;
   bottom: 0;
   width: 100%;
-  /*background-color:   black;*/
   color: #8a2bba;
-  /*min-height: auto;*/
+  min-height: auto;
   font-size: 15px;
   font-weight: bolder;
   font-family:  "Comic Sans MS", sans-serif;
@@ -146,10 +145,6 @@ div.logo{
   font-size: 25px;
   color: #fa6800;
 }
-/*
-section.topHeader{
-  top: -15%;
-}*/
 
 
 /* login Page  */
@@ -216,6 +211,7 @@ label.registerFields{
   text-shadow: 1px 1px #1d9113;
 }
 button{
+  margin-bottom: 4%;
   padding: 7px 35px;
   border-radius: 60px;
   display: inline-block;
@@ -431,4 +427,48 @@ h4{
   line-height: 20px;
   cursor: pointer;
   transition: 0.3s;
+}
+/*### SETTINGS FORM ARROWS ###*/
+input#upId {
+  background-image: url('http://www.clker.com/cliparts/f/8/f/9/11949856021028737245arrow-up-seagreen_benji__01.svg.thumb.png');
+  background-size:contain;
+  background-repeat: no-repeat;
+  text-indent: 30px;
+}
+input#upId:focus {
+  background-image:none;
+  text-indent:0px
+}
+
+input#downId {
+  background-image: url('http://www.clker.com/cliparts/1/b/9/c/1194985592838536401arrow-down-seagreen_benj_01.svg.thumb.png');
+  background-size:contain;
+  background-repeat: no-repeat;
+  text-indent: 30px;
+}
+input#downId:focus {
+  background-image:none;
+  text-indent:0px
+}
+
+input#rightId {
+  background-image: url('http://www.clker.com/cliparts/7/d/2/1/11949855991300783204arrow-right-seagreen_ben_01.svg.thumb.png');
+  background-size:contain;
+  background-repeat: no-repeat;
+  text-indent: 35px;
+}
+input#rightId:focus {
+  background-image:none;
+  text-indent:0px
+}
+
+input#leftId {
+  background-image: url('http://www.clker.com/cliparts/2/8/e/f/11949855951294915841arrow-left-seagreen_benj_01.svg.thumb.png');
+  background-size:contain;
+  background-repeat: no-repeat;
+  text-indent: 35px;
+}
+input#leftId:focus {
+  background-image:none;
+  text-indent:0px
 }

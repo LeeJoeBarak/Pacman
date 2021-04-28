@@ -252,6 +252,7 @@ function displaySettingDuringTheGame() {
     document.getElementById('mons').innerHTML = document.settings.monsters.value;
 }
 
+/*this BINDS the keyCode the User chose to the variables up, down, left, right*/
 function changeUserKeysValues(event) {
     //set key from event's id
     if (event.target.id === "upId") {
@@ -303,6 +304,7 @@ function setDefaultValuesForSettingsBoxes() {//set the default keys to arrows
     right = 39;
     down = 40;
 }
+
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';

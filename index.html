@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <link rel="stylesheet" type="text/css" href="gameStyle.css"/>
     <link rel="icon" href="image/tit.jpg"/> <!--todo: change icon photo!!-->
+
 </head>
 <!------------------------------- BODY ---------------------------------------------------->
 
@@ -151,14 +152,15 @@
         <h1 class="register">Settings</h1>
         <p class="pleaseFill">You can choose which keys to play with (defaults to arrows)</p>
         <!--### onkeydown="changeUserKeysValues(event)" ###-->
+       <!-- <input onchange="hideIcon(this);" Placeholder="Search" />--><!-- just for test-->
         <label for="upId" class="settingsFields">UP :</label>
-        <input id="upId" name="upId" class="settings" type="text" placeholder="up arrow" onkeydown="changeUserKeysValues(event)"><br>
+        <input id="upId" name="upId" class="settings" type="text" placeholder="arrowup" onkeydown="changeUserKeysValues(event)"><br>
         <label for="downId"  class="settingsFields">DOWN :</label>
-        <input id="downId" name="downId" class="settings" type="text" placeholder="down arrow"  onkeydown="changeUserKeysValues(event)"><br>
+        <input id="downId" name="downId" class="settings" type="text" placeholder="arrowdown" onkeydown="changeUserKeysValues(event)"><br>
         <label for="rightId" class="settingsFields">RIGHT :</label>
-        <input id="rightId" name="rightId" class="settings" type="text" placeholder="right arrow"  onkeydown="changeUserKeysValues(event)"><br>
+        <input id="rightId" name="rightId" class="settings" type="text" placeholder="arrowright"  onkeydown="changeUserKeysValues(event)"><br>
         <label for="leftId" class="settingsFields">LEFT :</label>
-        <input id="leftId" name="leftId" type="text" class="settings" placeholder="left arrow"  onkeydown="changeUserKeysValues(event)"><br>
+        <input id="leftId" name="leftId" type="text" class="settings" placeholder="arrowleft" onkeydown="changeUserKeysValues(event)"><br>
         <!--### Choose Food -->
         <label for="food" class="settingsFields">How much food do you want? </label>
         <input id="food" type="number" name="food"><br>
