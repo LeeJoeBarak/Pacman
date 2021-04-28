@@ -1180,6 +1180,8 @@ function positionNavbarAndFooterCorrectlyDuringTheGame(){
     $("#bottomFooter").hide();
     $("#menu").css("position", "fixed");
     $("#navnav").css("position", "fixed");
+    $("#navnav").css("top", "0");
+    $("#navnav").css("margin-bottom", "5%");
 
 }
 
