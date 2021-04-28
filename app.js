@@ -357,7 +357,6 @@ function displaySettings() {
 /*################# registration ###################*/
 
 
-/*################# todo: TO EDIT/ADD STUFF*/
 /* form[name=Registration Handler */
 $(function() {
     $.validator.addMethod("lettersonly", function(value, element) {
@@ -435,6 +434,7 @@ $(function() {
         }
     });
 });
+
 function insertUserToDB() {
     var user_name = document.getElementById("user_name").value;
     var password =  document.getElementById("user_password").value;
@@ -442,8 +442,6 @@ function insertUserToDB() {
     var lastName = document.getElementById("userLastName").value;
     var userMail = document.getElementById("userMail").value;
     var date = document.getElementById("birthday").value;
-
-
     if (localStorage.getItem(user_name) === null) {
         let data = {
             userName: user_name,
@@ -455,14 +453,17 @@ function insertUserToDB() {
         };
         window.localStorage.setItem(user_name, JSON.stringify(data));
         document.forms[0].reset();
-        $('#register').css('display', 'none');
-        $("#loading_img").css("display","block");
-        setTimeout(displaySettings,2000);
-        playerName = userMail;
+        hideRegisterForm_and_ShowLoadingImage();
     }
     else {
         alert("Seems like this Username is already taken...");
     }
+}
+function hideRegisterForm_and_ShowLoadingImage(){
+    $('#register').css('display', 'none');
+    $("#loading_img").css("display","block");
+    setTimeout(displaySettings,2000);
+    playerName = userMail;/*todo: can i delete this?*/
 }
 
 function validateUserPassword() {
