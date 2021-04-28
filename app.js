@@ -1151,8 +1151,7 @@ function removeLifeIcon(i) {
 
 function initGame() {
     clearIntervals();
-    //$("#bottomFooter").css("position","relative");
-    $("#bottomFooter").hide();
+    positionNavbarAndFooterCorrectlyDuringTheGame();
     $("#timeAlert").css("display", "none");
     calculateCellSize();
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -1176,6 +1175,12 @@ function initGame() {
     CreepyMusic.play();
     GameCompleted = false;
     return false;
+}
+function positionNavbarAndFooterCorrectlyDuringTheGame(){
+    $("#bottomFooter").hide();
+    $("#menu").css("position", "fixed");
+    $("#navnav").css("position", "fixed");
+
 }
 
 function alertNote(note,timeToAlert) {
