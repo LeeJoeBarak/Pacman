@@ -10,14 +10,10 @@ var up = 38;
 var down = 40;
 var left = 37;
 var right = 39;
-var food_remain = -1;
-var monster_remain = -1;
+var foodRemain = -1;
+var NumOfmonsters = -1;
 var timeToPlay = -1;
-var extra_food = 1;
-var boardExtraScore;
 var playerName;
-var extra_life = 1;
-var clock = 1;
 var StopSoungEffects = false;
 var intervals = [];
 var CellHeight;
@@ -40,7 +36,6 @@ var ClockMoveUp = true;
 var ClockRow;
 var ClockCol;
 var ClockEaten;
-// var IWantMusic = false;
 
 function funcExample(p1, p2) {
     return p1 * p2;   // The function returns the product of p1 and p2
@@ -322,19 +317,19 @@ function getRandomColor() {
 }
 
 function getRandomFoodAmount(){
-    food_remain = -1;
-    while (food_remain < 50 || food_remain > 90) {
-        food_remain = parseInt(100 * Math.random());
+    foodRemain = -1;
+    while (foodRemain < 50 || foodRemain > 90) {
+        foodRemain = parseInt(100 * Math.random());
     }
-    return food_remain;
+    return foodRemain;
 }
 
 function getRandomMonstersAmount(){
-    monster_remain = -1;
-    while (monster_remain < 1 || monster_remain > 4) {
-        monster_remain = parseInt(10 * Math.random());
+    NumOfmonsters = -1;
+    while (NumOfmonsters < 1 || NumOfmonsters > 4) {
+        NumOfmonsters = parseInt(10 * Math.random());
     }
-    return monster_remain;
+    return NumOfmonsters;
 }
 
 function getRandomTimeAmount(){
@@ -663,7 +658,7 @@ function PlaceTwentyFive(remaining_25_pt) {
         emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 3;
         remaining_25_pt--;
-        food_remain--;
+        foodRemain--;
     }
 }
 
@@ -672,7 +667,7 @@ function PlaceFifteen(remaining_15_pt) {
         emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 6;
         remaining_15_pt--;
-        food_remain--;
+        foodRemain--;
     }
 }
 
@@ -688,7 +683,7 @@ function PlaceFives(numOfFives){
         emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 5;
         numOfFives--;
-        food_remain--;
+        foodRemain--;
     }
 }
 
@@ -1047,7 +1042,7 @@ function MeetMonster(MonsVal){
     lives--;
     board[shape.i][shape.j] = 0;
     score = score - 10;
-    monster_remain = parseInt($(document.getElementById("monsters")).val());
+    NumOfmonsters = parseInt($(document.getElementById("monsters")).val());
 
     pacmanRemain=0;
     //setTimeout(continueGameLifeDown, 500);
@@ -1081,8 +1076,8 @@ function MeetMonster(MonsVal){
                     board[i][j] = 0;
                 }
                 MonstersRHere[i][j] = 0;
-                if(monster_remain > 0 && ((i === 0 || i === 14) && (j === 0 || j === 14))){
-                    if(monster_remain % 2 === 0){
+                if(NumOfmonsters > 0 && ((i === 0 || i === 14) && (j === 0 || j === 14))){
+                    if(NumOfmonsters % 2 === 0){
                         board[i][j] = 7;
                         MonstersRHere[i][j] = 7;
                     }
@@ -1090,7 +1085,7 @@ function MeetMonster(MonsVal){
                         board[i][j] = 9;
                         MonstersRHere[i][j] = 9;
                     }
-                    monster_remain--;
+                    NumOfmonsters--;
                 }
             }
         }
@@ -1132,21 +1127,18 @@ function initGame() {
     calculateCellSize();
     context.clearRect(0, 0, canvas.width, canvas.height);
     context = canvas.getContext("2d");
-    food_remain = parseInt($(document.getElementById("food")).val());
-    monster_remain = parseInt($(document.getElementById("monsters")).val());
+    foodRemain = parseInt($(document.getElementById("food")).val());
+    NumOfmonsters = parseInt($(document.getElementById("monsters")).val());
     timeToPlay = parseInt($(document.getElementById("setTime")).val());
     pacmanRight = true;
     pacmanLeft = false;
     pacmanUp = false;
     pacmanDown = false;
-    extra_food = 1;
-    clock = 1;
     if(lives === 6){
         removeLifeIcon(6);
     }
     lives = 5;
     extra_life = 1;
-    displayLifeIcons();
     clearIntervals();
     Start();
     Draw();
@@ -1154,47 +1146,7 @@ function initGame() {
     GameCompleted = false;
     return false;
 }
-function UpdateExtraScorePosition() {
-    let currScorePositions = new Array();
-    for (var i = 0; i < 15; i++) {
-        currScorePositions[i] = new Array();
-        for (var j = 0; j < 15; j++) {
-            currScorePositions[i][j] = 0;
-            if(boardExtraScore[i][j] === 8){
-                currScorePositions[i][j] = 8;
-            }
-        }
-    }
-    for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 15; j++) {
-            if(currScorePositions[i][j] === 8) {
-                notMove = true;
-                //monster get down
-                while(notMove) {
-                    var randomNum = Math.floor(Math.random() * 4);/*0,1*/
-                    if (randomNum === 0  && i+1 >= 0 && i+1 <= 14 && board[i + 1][j] !== 4 && MonstersRHere[i + 1][j] !== 9) {
-                        boardExtraScore[i][j] = 0;
-                        boardExtraScore[i + 1][j] = 8;
-                        notMove = false;
-                    }
-                    else if (randomNum === 1 && i-1 >= 0 && i-1 <= 14 && board[i - 1][j] !== 4 && MonstersRHere[i - 1][j] !== 9) {
-                        boardExtraScore[i][j] = 0;
-                        boardExtraScore[i - 1][j] = 8;
-                        notMove = false;
-                    } else if (randomNum === 2 && j+1 >= 0 && j+1 <= 14 && board[i][j + 1] !== 4 && MonstersRHere[i][j + 1] !== 9) {
-                        boardExtraScore[i][j] = 0;
-                        boardExtraScore[i][j + 1] = 8;
-                        notMove = false;
-                    } else if (randomNum === 3 && j-1 >= 0 && j-1 <= 14 && board[i][j - 1] !== 4 && MonstersRHere[i][j - 1] !== 9) {
-                        boardExtraScore[i][j] = 0;
-                        boardExtraScore[i][j - 1] = 8;
-                        notMove = false;
-                    }
-                }
-            }
-        }
-    }
-}
+
 function alertNote(note,timeToAlert) {
     setTimeout(function () {
         alert(note);
