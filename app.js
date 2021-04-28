@@ -14,10 +14,6 @@ var food_remain = -1;
 var monster_remain = -1;
 var timeToPlay = -1;
 var extra_food = 1;
-var pacmanRight = true;
-var pacmanLeft = false;
-var pacmanUp = false;
-var pacmanDown = false;
 var num_of_25_pt;
 var scoreOfTotalBoard = 0;
 var MonstersRHere;
@@ -470,6 +466,7 @@ function Start() {
     interval = setInterval(UpdatePacmanPosition, 350);
     interval = setInterval(UpdateMonsterPosition, 1000);
     CreepyMusic.play();
+    GameCompleted = false;
 }
 
 function findRandomEmptyCell(board) {
@@ -620,28 +617,36 @@ function UpdatePacmanPosition() {
     if (x == 1) {
         if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
             shape.j--;
-            pacmanDown, pacmanLeft, pacmanRight = false, false, false;
+            pacmanDown =false;
+            pacmanLeft = false;
+            pacmanRight = false;
             pacmanUp =true;
         }
     }
     if (x == 2) {
         if (shape.j < 14 && board[shape.i][shape.j + 1] != 4) {
             shape.j++;
-            pacmanUp, pacmanLeft, pacmanRight = false, false, false;
+            pacmanUp = false;
+            pacmanLeft = false;
+            pacmanRight = false;
             pacmanDown =true;
         }
     }
     if (x == 3) {
         if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
             shape.i--;
-            pacmanDown, pacmanUp, pacmanRight = false, false, false;
+            pacmanDown = false;
+            pacmanUp= false;
+            pacmanRight = false;
             pacmanLeft =true;
         }
     }
     if (x == 4) {
         if (shape.i < 14 && board[shape.i + 1][shape.j] != 4) {
             shape.i++;
-            pacmanDown, pacmanUp, pacmanLeft = false, false, false;
+            pacmanDown = false;
+            pacmanUp = false;
+            pacmanLeft = false;
             pacmanRight = true;
         }
     }
@@ -672,7 +677,7 @@ function UpdatePacmanPosition() {
     if (MonsPacVal===9){
         MeetMonster(9);
     }
-    if(!StopSoungEffects && (MonsPacVal===7 || MonsPacVal === 9)){
+    if(lives>1 && !StopSoungEffects && (MonsPacVal===7 || MonsPacVal === 9)){
         var audioGhost = new Audio('audio/pacman_eatghost.wav');
         audioGhost.play();
     }
@@ -685,9 +690,9 @@ function UpdatePacmanPosition() {
     if (score == 200  && !GameCompleted) {
         window.clearInterval(interval);
         window.alert("Game completed");
-        var audioDeath = new Audio('audio/pacman_death.wav');
+        /*var audioDeath = new Audio('audio/pacman_death.wav');
+        audioDeath.play();*/
         CreepyMusic.pause();
-        audioDeath.play();
         displaySettings();
         GameCompleted= true;
     } else {
@@ -759,7 +764,7 @@ function UpdateMonsterPosition(){
     let CellVal= MonstersRHere[shape.i][shape.j];
     if(CellVal === 7 || CellVal===9){
         MeetMonster(CellVal);
-        if(!StopSoungEffects){
+        if(lives >1 && !StopSoungEffects){
             var audio = new Audio('audio/pacman_eatghost.wav');
             audio.play();
         }
@@ -1127,39 +1132,6 @@ function alertNote(note,timeToAlert) {
     }, timeToAlert);
 }
 
-function continueGameLifeDown() {
-    $("#timeAlert").css("display", "none");
-    removeLifeIcon(lives);
-    lives--;
-    monster_remain = parseInt($(document.getElementById("monsters")).val());
-    lives = false;
-    pacman_remain = 1;
-    for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 15; j++) {
-            if(board[i][j] === 2){
-                board[i][j] = 0;
-            }
-            MonstersRHere[i][j] = 0;
-            if(monster_remain > 0 && ((i === 0 && j === 0) || (i === 14 && j === 0) || (i === 14 && j === 14) || (i === 0 && j === 14))){
-                MonstersRHere[i][j] = 9;
-                monster_remain--;
-            }
-        }
-    }
-    if(pacman_remain > 0 ){
-        var emptyCell = findRandomEmptyCell(board);
-        board[emptyCell[0]][emptyCell[1]] = 5;
-        shape.i = emptyCell[0];
-        shape.j = emptyCell[1];
-        pacman_remain--;
-    }
-
-    clearIntervals();
-
-    intervals.push(setInterval(UpdatePacmanPosition, 150));
-    intervals.push(setInterval(UpdateMonsterPosition, 500));
-    intervals.push(setInterval(UpdateExtraScorePosition, 500));
-}
 
 function stop_soundEffect() {
     StopSoungEffects = true;
