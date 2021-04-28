@@ -471,17 +471,24 @@ function validateUserPassword() {
     let userPassword = document.getElementById("userPassword").value;
     let originalData = localStorage.getItem(userName);
     console.info(originalData);
-    if (originalData === null || userName === "" || userPassword ==="") {
-        alert("You must fill all the labels before you enter the game");
+    if ( userName === "" || userPassword ==="") {
+        alert("you didn't enter Username or Password");
+    }
+    else if(originalData === null){
+        alert("no such user, you must register first");
+
     }
     else {
         let dataObj = JSON.parse(originalData);
         let psd = dataObj.userPassword;
         let name = dataObj.userName;
+        if( userPassword !== psd){
+            alert("Wrong Password");
+        }
         if (userName === name && userPassword === psd) {
             $('#login').css('display', 'none');
             $("#loading_img").css("display","block");
-            setTimeout(displaySettings,2000);
+            setTimeout(displaySettings,1500);
             playerName = userName;
         }
     }
