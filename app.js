@@ -6,10 +6,10 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-var up = 38;
-var down = 40;
-var left = 37;
-var right = 39;
+var MoveUp = 38;
+var MoveDown = 40;
+var MoveLeft = 37;
+var MoveRight = 39;
 var foodRemain = -1;
 var NumOfmonsters = -1;
 var timeToPlay = -1;
@@ -254,26 +254,28 @@ function displaySettingDuringTheGame() {
 /*this BINDS the keyCode the User chose to the variables up, down, left, right*/
 function changeUserKeysValues(event) {
     //set key from event's id
-    if (event.target.id === "upId") {
-        up = event.keyCode;
-        // upId.value = event.key;
-        if(event.key.length > 1) {
-            upId.value = event.key;
-        }
-    }else if (event.target.id === "downId") {
-        down = event.keyCode;
+    if (event.target.id === "downId") {
+        MoveDown = event.keyCode;
         if(event.key.length > 1) {
             downId.value = event.key;
         }
 
     }else if (event.target.id === "leftId") {
-        left = event.keyCode;
+        MoveLeft = event.keyCode;
         if(event.key.length > 1) {
             leftId.value = event.key;
         }
 
-    }else if (event.target.id === "rightId") {
-        right = event.keyCode;
+    }
+    else if (event.target.id === "upId") {
+        MoveUp = event.keyCode;
+        // upId.value = event.key;
+        if(event.key.length > 1) {
+            upId.value = event.key;
+        }
+    }
+    else if (event.target.id === "rightId") {
+        MoveRight = event.keyCode;
         if(event.key.length > 1) {
             rightId.value = event.key;
         }
@@ -282,10 +284,10 @@ function changeUserKeysValues(event) {
 
 function randomSetting() {
     clearIntervals();
-    left = 37;
-    up = 38;
-    right = 39;
-    down = 40;
+    MoveLeft = 37;
+    MoveUp = 38;
+    MoveRight = 39;
+    MoveDown = 40;
     document.getElementById("ball_5_points").value = getRandomColor();
     document.getElementById("ball_15_points").value = getRandomColor();
     document.getElementById("ball_25_points").value = getRandomColor();
@@ -298,10 +300,10 @@ function setDefaultValuesForSettingsBoxes() {//set the default keys to arrows
     document.getElementById("food").value = null;
     document.getElementById("monsters").value = null;
     document.getElementById("setTime").value = null;
-    left = 37;
-    up = 38;
-    right = 39;
-    down = 40;
+    MoveLeft = 37;
+    MoveUp = 38;
+    MoveRight = 39;
+    MoveDown = 40;
 }
 
 
@@ -699,16 +701,16 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-    if (keysDown[38]) {
+    if (keysDown[MoveUp]) {
         return 1;
     }
-    if (keysDown[40]) {
+    if (keysDown[MoveDown]) {
         return 2;
     }
-    if (keysDown[37]) {
+    if (keysDown[MoveLeft]) {
         return 3;
     }
-    if (keysDown[39]) {
+    if (keysDown[MoveRight]) {
         return 4;
     }
 }
