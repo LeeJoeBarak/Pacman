@@ -1151,6 +1151,8 @@ function removeLifeIcon(i) {
 
 function initGame() {
     clearIntervals();
+    //$("#bottomFooter").css("position","relative");
+    $("#bottomFooter").hide();
     $("#timeAlert").css("display", "none");
     calculateCellSize();
     context.clearRect(0, 0, canvas.width, canvas.height);

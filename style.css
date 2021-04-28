@@ -88,9 +88,10 @@ div.logo{
   padding-left: 5%;
   padding-top: 10px;
   text-align: center;
-  font-family: 'Alef', serif;
+  font-family: "Wicked Tricker", serif;
   font-size: 12px;
 }
+
 
  /*Navigation Bar*/
 .navbar {
@@ -102,6 +103,7 @@ div.logo{
   padding-left: 1%;
   border: 1px solid transparent;
   border-radius: 60px;
+  z-index: 1030;
 }
 .navbar ul{
   display:inline-block;
@@ -354,6 +356,12 @@ h4{
   src: url('fonts/Wicked Tricker.ttf');
 }
 @font-face {
+  font-family: 'CFHalloween-Regular';
+  font-weight: 400;
+  font-style: normal;
+  src: url('fonts/CFHalloween-Regular.ttf');
+}
+@font-face {
   font-family: 'spiderfont';
   font-weight: 200;
   font-style: normal;
@@ -443,13 +451,15 @@ input#leftId:focus {
 
 /*###  THE GAME  ####*/
 .gameArea {
-  position: fixed;
+  position: page;
   margin-top: 10%;
-  margin-bottom: 5%;
-  width: 1400px;
+  margin-bottom: -5%;
+ /* width: 1400px;*/
  /* padding-top: 150px;*/
   font-family: "Night Mare", sans-serif;
   overflow: auto; /* Enable scroll if needed */
+  display: inline-flex;
+  width: -moz-max-content;
 }
 input.rightPanel{
   font-size: 10px;
@@ -458,18 +468,16 @@ input.rightPanel{
 }
 
 div#frame {
-  margin-top: 1%;
-  margin-bottom: 5%;
-  padding-bottom: 20px;
-  border-style: double;
-  border-color:yellow;
-  background-color: #32a87f;
+  border-style: dotted ;
+  border-color: yellow;
   overflow: auto;
   display: inline-flex;
   width: -moz-max-content;
-  overflow: auto; /* Enable scroll if needed */
 }
 
+div#game{
+  background-color: yellowgreen;
+}
 div#leftPanel {
   position: relative;
   float: left;
@@ -521,12 +529,13 @@ div#game {
 }
 
 table.settingsRightPanel{
-  font-family: 'Alef', serif;
-  font-size: 16px;
+  font-family: "HallowenInline", sans-serif;
+  font-style: oblique;
   font-weight: bold;
+  font-size: 16px;
   width: fit-content;
   float: right;
-  border: 3px solid grey;
+  border: 5px solid yellow;
   border-radius: 5px;
   text-align: left;
   overflow: auto;
