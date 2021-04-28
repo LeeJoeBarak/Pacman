@@ -182,11 +182,13 @@
     <button id="random_btn" onclick="randomSetting()"  type="submit" style="display: none">Fill Randomly</button>
 </div>
 
+
 <!-- #score_time_life -->
+<section>
 <div id="score_time_life" class="theGame" style="display: none">
-    <div id="frame"><!--todo: check if possiblr to unify with containing div-->
+    <div id="frame">
         <!-- ALL LEFT SIDE PANEL OF THE GAME-->
-        <div id="left_side" style="margin-left: auto">
+        <div id="leftPanel" style="margin-left: auto">
             <div id="player_name">
                 <h1>PLAYER NAME: <p id="pl_name" style="display: inline-flex"></p></h1>
             </div>
@@ -232,9 +234,9 @@
             <canvas id="canvas" class="gameClass" height="600" width="600"></canvas>
         </div>
         <!-- ALL RIGHT SIDE PANEL - WHERE WE SHOW THE MOVE-KEYS AND SETTINGS -->
-        <div id="right_side" class="tableSetting">
-            <table>
-                <tbody>
+        <div id="rightPanel">
+            <table  class="tableSetting">
+
                 <tr>
                     <td>
                         <label id="btn_up">UP:</label>&nbsp;
@@ -272,7 +274,7 @@
                         <p id="mons" style="text-align: center; vertical-align: middle;"></p>
                     </td>
                 </tr>
-                </tbody>
+
             </table>
             <div id="timeAlert" class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -281,7 +283,7 @@
         </div>
     </div>
 </div>
-
+</section>
 <!-- #loading_img -->
 <div id="loading_img" hidden>
     <img src="image/ezgif.com-gif-maker.gif" alt="loading..." class="center">

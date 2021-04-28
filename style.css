@@ -450,7 +450,7 @@ div#frame {
   margin-top: 1%;
   margin-bottom: 5%;
   border-style: double;
-  border-color: red;
+  border-color:yellow;
   background-color: #32a87f;
   overflow: auto;
   display: inline-flex;
@@ -458,7 +458,7 @@ div#frame {
   overflow: auto; /* Enable scroll if needed */
 }
 
-div#left_side {
+div#leftPanel {
   position: relative;
   float: left;
   width: border-box;
@@ -469,7 +469,7 @@ div#left_side {
   color: yellowgreen;
   overflow: auto;
 }
-div#right_side{
+div#rightPanel{
   background-color: #7e08fc;
   color: greenyellow;
   font-family: "Night Mare", sans-serif;
