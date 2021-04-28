@@ -376,6 +376,9 @@ function displaySettings() {
 
 /* form[name=Registration Handler */
 $(function() {
+    $.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z]+$/i.test(value);
+    }, "only letters allowed");
 
     $.validator.addMethod("alphanumeric", function(value, element) {
         return this.optional(element) || /^.*(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/i.test(value);
@@ -387,8 +390,10 @@ $(function() {
     }, "only letters allowed");
 
 
+
     // Initialize form validation on the registration form.
     // It has the name attribute "registration"
+    defineRegexForValidate();
     $("form[name='registration']").validate({
         // Specify validation rules
         rules: {
@@ -455,6 +460,15 @@ $(function() {
     });
 });
 
+function defineRegexForValidate(){
+    $.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z]+$/i.test(value);
+    }, "only letters allowed");
+
+    $.validator.addMethod("alphanumeric", function(value, element) {
+        return this.optional(element) || /^.*(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/i.test(value);
+    }, "your password must include both letters and numbers");
+}
 function insertUserToDB() {
     var user_name = document.getElementById("user_Name").value;
     var password =  document.getElementById("user_Password").value;
@@ -1182,6 +1196,8 @@ function positionNavbarAndFooterCorrectlyDuringTheGame(){
     $("#bottomFooter").hide();
     $("#menu").css("position", "fixed");
     $("#navnav").css("position", "fixed");
+    $("#navnav").css("top", "0");
+    $("#navnav").css("margin-bottom", "5%");
 
 }
 
