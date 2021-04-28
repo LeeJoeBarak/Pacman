@@ -769,6 +769,16 @@ function Draw() {
             }
             else if(ClockIsHere[i][j]===10){
                 context.drawImage(Clock, center.x - CellWidth/2, center.y - CellHeight/2);
+            } else if (bordVal === 2 && pacmanRight && lives > 0) {
+                context.beginPath();
+                context.arc(center.x, center.y, 20, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+                context.lineTo(center.x, center.y);
+                context.fillStyle = pac_color; //color
+                context.fill();
+                context.beginPath();
+                context.arc(center.x + 5, center.y - 10, 5, 0, 2 * Math.PI); // circle
+                context.fillStyle = "black"; //color
+                context.fill();
             }
             else if (bordVal === 2 && pacmanLeft && lives > 0) {
                 context.beginPath();
@@ -790,17 +800,7 @@ function Draw() {
                 context.arc(center.x + 10, center.y + 5, 5, 0, 2 * Math.PI); // circle
                 context.fillStyle = "black"; //color
                 context.fill();
-            } else if (bordVal === 2 && pacmanRight && lives > 0) {
-                context.beginPath();
-                context.arc(center.x, center.y, 20, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
-                context.lineTo(center.x, center.y);
-                context.fillStyle = pac_color; //color
-                context.fill();
-                context.beginPath();
-                context.arc(center.x + 5, center.y - 10, 5, 0, 2 * Math.PI); // circle
-                context.fillStyle = "black"; //color
-                context.fill();
-            } else if (bordVal === 2 && pacmanDown && lives > 0) {
+            }else if (bordVal === 2 && pacmanDown && lives > 0) {
                 context.beginPath();
                 context.arc(center.x, center.y, 20, 0.75 * Math.PI, 0.35 * Math.PI); // half circle
                 context.lineTo(center.x, center.y);
@@ -933,7 +933,7 @@ function UpdatePacmanPosition() {
     }
     if (score >= 200  && !GameCompleted) {
         window.clearInterval(interval);
-        window.alert("Winner!!");
+        alert("Winner!!");
         /*var audioDeath = new Audio('audio/pacman_death.wav');
         audioDeath.play();*/
         CreepyMusic.pause();
@@ -979,7 +979,7 @@ function UpdateClockPosition(){
 function addTime(){
     ClockIsHere[shape.i][shape.j] =0;
     time_elapsed = time_elapsed +10;
-    window.alert("You Got 10 seconds!!");
+    /*window.alert("You Got 10 seconds!!");*/
     ClockEaten =true;
 }
 
@@ -1183,22 +1183,6 @@ function positionNavbarAndFooterCorrectlyDuringTheGame(){
 
 }
 
-function alertNote(note,timeToAlert) {
-    setTimeout(function () {
-        alert(note);
-    }, timeToAlert);
-}
-
-function gameOver() {
-    for (var i = 0; i < lines; i++) {
-        for(var j = 0; j < columns; j++){
-            if(board[i][j] === 1 || board[i][j] === 6 || board[i][j] === 7){
-                return false;
-            }
-        }
-    }
-    return true;
-}
 
 
 /*########### TODO: I'm going to try using those functions to fix the game area so it fits the browser window size! don't erase!*/
