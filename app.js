@@ -370,8 +370,6 @@ function displaySettings() {
     $('#gamePersonalStatus').css('display', 'none');
 }
 
-
-
 /*################# registration ###################*/
 
 
